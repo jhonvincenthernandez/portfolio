@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let activeSectionId = "";
   let scrollTicking = false;
   let navigationTicking = false;
+  let typingTimer = null;
 
   /* =========================================
      UTILITY FUNCTIONS
@@ -37,16 +38,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const getScrollBehavior = () =>
     prefersReducedMotion() ? "auto" : "smooth";
 
+  const getHeaderHeight = () =>
+    header
+      ? Math.ceil(header.getBoundingClientRect().height)
+      : 0;
+
   const isValidTheme = (theme) =>
     theme === "light" || theme === "dark";
 
   const getCurrentTheme = () =>
     html.dataset.theme === "light" ? "light" : "dark";
-
-  const getHeaderHeight = () =>
-    header
-      ? Math.ceil(header.getBoundingClientRect().height)
-      : 0;
 
   const safeFocus = (element) => {
     if (!element) return;
@@ -76,7 +77,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const getStoredTheme = () => {
     try {
-      const storedTheme = localStorage.getItem(THEME_KEY);
+      const storedTheme = localStorage.getItem(
+        THEME_KEY
+      );
 
       return isValidTheme(storedTheme)
         ? storedTheme
@@ -92,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       localStorage.setItem(THEME_KEY, theme);
     } catch {
-      // Local storage may be unavailable.
+      // Storage may be unavailable.
     }
   };
 
@@ -130,13 +133,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!themeToggle) return;
 
     const isLight = theme === "light";
-    const nextTheme = isLight ? "dark" : "light";
-
     const label = isLight
       ? "Switch to dark theme"
       : "Switch to light theme";
 
-    themeToggle.setAttribute("type", "button");
+    themeToggle.type = "button";
     themeToggle.setAttribute("aria-label", label);
     themeToggle.setAttribute("title", label);
     themeToggle.setAttribute(
@@ -145,12 +146,17 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     themeToggle.dataset.theme = theme;
-    themeToggle.dataset.nextTheme = nextTheme;
+    themeToggle.dataset.nextTheme = isLight
+      ? "dark"
+      : "light";
 
     updateThemeIcons(theme);
   };
 
-  const applyTheme = (theme, shouldSave = true) => {
+  const applyTheme = (
+    theme,
+    shouldSave = true
+  ) => {
     const selectedTheme =
       theme === "light" ? "light" : "dark";
 
@@ -169,10 +175,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const initializeTheme = () => {
-    applyTheme(getStoredTheme() || "dark", false);
-  };
-
   const toggleTheme = () => {
     const nextTheme =
       getCurrentTheme() === "light"
@@ -182,7 +184,10 @@ document.addEventListener("DOMContentLoaded", () => {
     applyTheme(nextTheme);
   };
 
-  initializeTheme();
+  applyTheme(
+    getStoredTheme() || "dark",
+    false
+  );
 
   themeToggle?.addEventListener(
     "click",
@@ -233,13 +238,19 @@ document.addEventListener("DOMContentLoaded", () => {
       ? "Close navigation menu"
       : "Open navigation menu";
 
-    menuToggle.setAttribute("type", "button");
+    menuToggle.type = "button";
     menuToggle.setAttribute(
       "aria-expanded",
       String(isOpen)
     );
-    menuToggle.setAttribute("aria-label", label);
-    menuToggle.setAttribute("title", label);
+    menuToggle.setAttribute(
+      "aria-label",
+      label
+    );
+    menuToggle.setAttribute(
+      "title",
+      label
+    );
 
     updateMenuIcon(isOpen);
   };
@@ -258,10 +269,19 @@ document.addEventListener("DOMContentLoaded", () => {
       shouldOpen
     );
 
-    navLinks.setAttribute(
-      "aria-hidden",
-      String(!shouldOpen)
-    );
+    /*
+      Keep desktop navigation accessible.
+      aria-hidden is only applied while mobile
+      navigation is closed or opened.
+    */
+    if (isMobile()) {
+      navLinks.setAttribute(
+        "aria-hidden",
+        String(!shouldOpen)
+      );
+    } else {
+      navLinks.removeAttribute("aria-hidden");
+    }
 
     updateMenuButton(shouldOpen);
 
@@ -283,16 +303,12 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const toggleMenu = () => {
-    if (!navLinks) return;
+    if (!navLinks || !isMobile()) return;
 
     const isOpen =
       navLinks.classList.contains("open");
 
-    if (isOpen) {
-      closeMenu();
-    } else {
-      setMenuState(true);
-    }
+    setMenuState(!isOpen);
   };
 
   if (menuToggle && navLinks) {
@@ -311,9 +327,10 @@ document.addEventListener("DOMContentLoaded", () => {
     navLinks
       .querySelectorAll("a")
       .forEach((link) => {
-        link.addEventListener("click", () => {
-          closeMenu();
-        });
+        link.addEventListener(
+          "click",
+          () => closeMenu()
+        );
       });
   }
 
@@ -355,7 +372,8 @@ document.addEventListener("DOMContentLoaded", () => {
             100,
             Math.max(
               0,
-              (currentScroll / documentHeight) * 100
+              (currentScroll / documentHeight) *
+                100
             )
           )
         : 0;
@@ -375,7 +393,9 @@ document.addEventListener("DOMContentLoaded", () => {
         currentScroll > SCROLL_TOP_THRESHOLD;
 
       backToTop.hidden = !shouldShow;
-      backToTop.tabIndex = shouldShow ? 0 : -1;
+      backToTop.tabIndex = shouldShow
+        ? 0
+        : -1;
 
       backToTop.setAttribute(
         "aria-hidden",
@@ -412,8 +432,6 @@ document.addEventListener("DOMContentLoaded", () => {
     requestScrollUpdate
   );
 
-  updateScrollUI();
-
   backToTop?.addEventListener(
     "click",
     () => {
@@ -438,7 +456,9 @@ document.addEventListener("DOMContentLoaded", () => {
   ].join(", ");
 
   const revealItems = [
-    ...document.querySelectorAll(revealSelector),
+    ...document.querySelectorAll(
+      revealSelector
+    ),
   ];
 
   const showAllRevealItems = () => {
@@ -506,6 +526,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!target) return;
 
     const headerOffset = getHeaderHeight();
+
     const targetTop =
       target.getBoundingClientRect().top +
       window.scrollY -
@@ -653,11 +674,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateActiveNavigation = () => {
     if (!trackedSections.length) return;
 
-    const headerOffset = getHeaderHeight();
-
     const activationLine =
       window.scrollY +
-      headerOffset +
+      getHeaderHeight() +
       Math.min(
         window.innerHeight * 0.28,
         220
@@ -707,9 +726,124 @@ document.addEventListener("DOMContentLoaded", () => {
       "load",
       requestNavigationUpdate
     );
-
-    updateActiveNavigation();
   }
+
+  /* =========================================
+     TYPING ANIMATION
+  ========================================= */
+
+  const typingText =
+    document.querySelector("#typingText");
+
+  const typingCursor =
+    document.querySelector(".typing-cursor");
+
+  const typingRoles = [
+    "Web Development",
+    "Backend Development",
+    "Software Development",
+    "Database Integration",
+  ];
+
+  let roleIndex = 0;
+  let charIndex = 0;
+  let deleting = false;
+
+  const stopTyping = () => {
+    if (typingTimer !== null) {
+      window.clearTimeout(typingTimer);
+    }
+
+    typingTimer = null;
+  };
+
+  const typeNext = () => {
+    if (
+      !typingText ||
+      prefersReducedMotion()
+    ) {
+      return;
+    }
+
+    const currentRole =
+      typingRoles[roleIndex];
+
+    if (
+      !deleting &&
+      charIndex === currentRole.length
+    ) {
+      deleting = true;
+
+      typingTimer = window.setTimeout(
+        typeNext,
+        1700
+      );
+
+      return;
+    }
+
+    if (
+      deleting &&
+      charIndex === 0
+    ) {
+      deleting = false;
+
+      roleIndex =
+        (roleIndex + 1) %
+        typingRoles.length;
+
+      typingTimer = window.setTimeout(
+        typeNext,
+        420
+      );
+
+      return;
+    }
+
+    charIndex += deleting ? -1 : 1;
+
+    typingText.textContent =
+      currentRole.slice(0, charIndex);
+
+    typingTimer = window.setTimeout(
+      typeNext,
+      deleting ? 42 : 82
+    );
+  };
+
+  const initializeTyping = () => {
+    if (!typingText) return;
+
+    stopTyping();
+
+    if (prefersReducedMotion()) {
+      typingText.textContent =
+        typingRoles[0];
+
+      if (typingCursor) {
+        typingCursor.hidden = true;
+      }
+
+      return;
+    }
+
+    if (typingCursor) {
+      typingCursor.hidden = false;
+    }
+
+    roleIndex = 0;
+    charIndex = 0;
+    deleting = false;
+
+    typingText.textContent = "";
+
+    typingTimer = window.setTimeout(
+      typeNext,
+      500
+    );
+  };
+
+  initializeTyping();
 
   /* =========================================
      DYNAMIC MOTION PREFERENCE
@@ -717,7 +851,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const handleMotionPreferenceChange = () => {
     if (prefersReducedMotion()) {
+      stopTyping();
       showAllRevealItems();
+
+      if (typingText) {
+        typingText.textContent =
+          typingRoles[0];
+      }
+
+      if (typingCursor) {
+        typingCursor.hidden = true;
+      }
+    } else {
+      initializeRevealAnimations();
+      initializeTyping();
     }
   };
 
