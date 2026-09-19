@@ -302,7 +302,7 @@ body,
 .brand {
   margin-right: auto;
   color: #ffffff;
-  font: 700 26px/1 "Space Grotesk", sans-serif;
+  font: 700 clamp(23px, 2.2vw, 26px) / 1 "Space Grotesk", sans-serif;
   letter-spacing: -1.2px;
 }
 
@@ -713,10 +713,10 @@ html[data-theme="light"] .theme-icon-moon {
 }
 
 .vincent-mark {
-  margin: 82px 0 68px;
-  color: #f5f9ff;
-  font: 700 98px/0.9 "Space Grotesk", sans-serif;
-  letter-spacing: -9px;
+  margin: 72px 0 58px;
+  color: var(--text-primary);
+  font: 700 clamp(72px, 8vw, 98px) / 0.9 "Space Grotesk", sans-serif;
+  letter-spacing: clamp(-7px, -0.7vw, -9px);
   animation: softFloat 6s ease-in-out infinite;
 }
 
