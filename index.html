@@ -1,107 +1,1232 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Jhon Vincent Ordanza Hernandez — aspiring software and web developer portfolio.">
-  <meta name="theme-color" content="#08111f">
-  <title>Vincent Hernandez | Software & Web Developer Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
-  <header class="site-header">
-    <nav class="nav container" aria-label="Primary navigation">
-      <a class="brand" href="#home" aria-label="Vincent homepage"><span>Vincent</span><b>.</b></a>
-      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Open navigation">☰</button>
-      <div class="nav-links" id="navLinks">
-        <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#education">Journey</a><a href="#contact">Contact</a>
-      </div>
-      <a class="nav-cta" href="#contact">Let's connect <span>↗</span></a>
-    </nav>
-  </header>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
 
-  <main>
-    <section class="hero section" id="home">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <div class="availability"><span></span> Fourth-year BSIT student · Philippines</div>
-          <p class="kicker">HELLO, I'M JHON VINCENT</p>
-          <h1>Building practical digital solutions with <em>curiosity</em> and code.</h1>
-          <p class="hero-intro">An aspiring software and web developer exploring backend systems, database-driven applications, and technology that solves real-world problems.</p>
-          <div class="actions"><a class="button primary" href="#projects">Explore my work ↗</a><a class="button ghost" href="#contact">Contact me</a></div>
-          <div class="quick-facts"><span>Web & Backend</span><span>Database Integration</span><span>IT & Technical Learning</span></div>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <meta
+      name="description"
+      content="Jhon Vincent Ordanza Hernandez — aspiring software and web developer specializing in practical web applications, mobile development, backend systems, databases, and technical learning."
+    />
+
+    <meta
+      name="keywords"
+      content="Vincent Hernandez, Jhon Vincent Hernandez, web developer, software developer, BSIT, Django, Python, MySQL, Ionic, Vue.js, AgriScan+"
+    />
+
+    <meta
+      name="author"
+      content="Jhon Vincent Ordanza Hernandez"
+    />
+
+    <meta name="theme-color" content="#08111f" />
+    <meta name="color-scheme" content="dark light" />
+
+    <meta
+      property="og:title"
+      content="Vincent Hernandez | Software & Web Developer"
+    />
+
+    <meta
+      property="og:description"
+      content="Portfolio of Jhon Vincent Ordanza Hernandez, an aspiring software and web developer building practical digital solutions."
+    />
+
+    <meta property="og:type" content="website" />
+
+    <meta
+      property="og:url"
+      content="https://vincent-portfolio-kappa-seven.vercel.app/"
+    />
+
+    <meta
+      property="og:image"
+      content="https://vincent-portfolio-kappa-seven.vercel.app/assets/profile.jpg"
+    />
+
+    <meta name="twitter:card" content="summary" />
+
+    <meta
+      name="twitter:title"
+      content="Vincent Hernandez | Software & Web Developer"
+    />
+
+    <meta
+      name="twitter:description"
+      content="Explore Vincent Hernandez's projects, skills, learning journey, and career direction."
+    />
+
+    <meta
+      name="twitter:image"
+      content="https://vincent-portfolio-kappa-seven.vercel.app/assets/profile.jpg"
+    />
+
+    <title>
+      Vincent Hernandez | Software & Web Developer Portfolio
+    </title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Prevent theme flash during page loading -->
+    <script>
+      (() => {
+        try {
+          const savedTheme =
+            localStorage.getItem("portfolio-theme");
+
+          if (savedTheme === "light") {
+            document.documentElement.dataset.theme = "light";
+          }
+        } catch {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- Accessibility -->
+    <a class="skip-link" href="#main-content">
+      Skip to main content
+    </a>
+
+    <!-- Scroll progress -->
+    <div
+      class="scroll-progress"
+      id="scrollProgress"
+      role="progressbar"
+      aria-label="Page scroll progress"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="0"
+    ></div>
+
+    <!-- Decorative background -->
+    <div
+      class="ambient ambient-one"
+      aria-hidden="true"
+    ></div>
+
+    <div
+      class="ambient ambient-two"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Header -->
+    <header class="site-header">
+      <nav
+        class="nav container"
+        aria-label="Primary navigation"
+      >
+        <!-- Brand -->
+        <a
+          class="brand"
+          href="#home"
+          aria-label="Vincent homepage"
+        >
+          <span>Vincent</span>
+          <b aria-hidden="true">.</b>
+        </a>
+
+        <!-- Mobile menu -->
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="navLinks"
+          aria-label="Open navigation menu"
+        >
+          <svg
+            class="icon icon-menu"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M4 6h16" />
+            <path d="M4 12h16" />
+            <path d="M4 18h16" />
+          </svg>
+        </button>
+
+        <!-- Navigation links -->
+        <div
+          class="nav-links"
+          id="navLinks"
+        >
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#education">Journey</a>
+          <a href="#contact">Contact</a>
         </div>
-        <div class="hero-visual" aria-label="Personal introduction card">
-          <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
-          <div class="identity-card">
-            <div class="identity-top"><span class="small-label">PORTFOLIO / 2026</span><span class="card-symbol">✳</span></div>
-            <div class="vincent-mark">V<span>.</span></div>
-            <p class="small-label">CURRENT DIRECTION</p>
-            <h2>Software &<br>Web Development</h2>
-            <p>Learning through academic projects, experimentation, and hands-on technical practice.</p>
-            <div class="card-footer"><span>Mindoro State University</span><span>BSIT</span></div>
+
+        <!-- Theme toggle -->
+        <button
+          class="theme-toggle"
+          id="themeToggle"
+          type="button"
+          aria-label="Switch to light theme"
+          aria-pressed="false"
+          title="Switch to light theme"
+        >
+          <span
+            class="theme-toggle-visual"
+            aria-hidden="true"
+          >
+            <svg
+              class="theme-icon theme-icon-sun"
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              hidden
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+
+            <svg
+              class="theme-icon theme-icon-moon"
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5
+                8.5 8.5 0 1 0 20.5 14.5Z"
+              />
+            </svg>
+          </span>
+
+          <span class="theme-toggle-label">
+            Theme
+          </span>
+        </button>
+
+        <!-- Header CTA -->
+        <a
+          class="nav-cta"
+          href="#contact"
+        >
+          Let's connect
+
+          <svg
+            class="icon icon-arrow"
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M7 17 17 7" />
+            <path d="M7 7h10v10" />
+          </svg>
+        </a>
+      </nav>
+    </header>
+
+    <!-- Main content -->
+    <main id="main-content">
+      <!-- =================================
+           Hero Section
+           ================================= -->
+
+      <section
+        class="hero section"
+        id="home"
+        aria-labelledby="hero-title"
+      >
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <div class="availability reveal-on-load">
+              <span aria-hidden="true"></span>
+              Fourth-year BSIT student · Philippines
+            </div>
+
+            <p class="kicker reveal-on-load">
+              HELLO, I'M JHON VINCENT
+            </p>
+
+            <h1
+              id="hero-title"
+              class="hero-title reveal-on-load"
+            >
+              Building practical digital solutions with
+              <em>curiosity</em> and code.
+            </h1>
+
+            <p class="hero-intro reveal-on-load">
+              An aspiring software and web developer exploring
+              backend systems, database-driven applications,
+              mobile development, and technology that solves
+              real-world problems.
+            </p>
+
+            <div class="actions reveal-on-load">
+              <a
+                class="button primary"
+                href="#projects"
+              >
+                Explore my work
+
+                <svg
+                  class="icon icon-arrow"
+                  viewBox="0 0 24 24"
+                  width="17"
+                  height="17"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M7 17 17 7" />
+                  <path d="M7 7h10v10" />
+                </svg>
+              </a>
+
+              <a
+                class="button ghost"
+                href="#contact"
+              >
+                Contact me
+              </a>
+            </div>
+
+            <div
+              class="quick-facts reveal-on-load"
+              aria-label="Areas of interest"
+            >
+              <span>Web &amp; Backend</span>
+              <span>Mobile Development</span>
+              <span>Database Integration</span>
+            </div>
+          </div>
+
+          <div
+            class="hero-visual"
+            aria-label="Personal introduction card"
+          >
+            <div
+              class="orbit orbit-a"
+              aria-hidden="true"
+            ></div>
+
+            <div
+              class="orbit orbit-b"
+              aria-hidden="true"
+            ></div>
+
+            <div class="identity-card floating-element">
+              <div class="identity-top">
+                <span class="small-label">
+                  PORTFOLIO
+                </span>
+
+                <span
+                  class="card-symbol"
+                  aria-hidden="true"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 2v20" />
+                    <path d="M2 12h20" />
+                    <path d="m4.93 4.93 14.14 14.14" />
+                    <path d="m19.07 4.93-14.14 14.14" />
+                  </svg>
+                </span>
+              </div>
+
+              <div class="profile-photo-wrapper">
+                <img
+                  class="profile-photo"
+                  src="assets/profile.jpg"
+                  alt="Professional portrait of Jhon Vincent Ordanza Hernandez"
+                  width="240"
+                  height="240"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+
+              <div
+                class="vincent-mark"
+                aria-hidden="true"
+              >
+                V<span>.</span>
+              </div>
+
+              <p class="small-label">
+                CURRENT DIRECTION
+              </p>
+
+              <h2>
+                Software &amp;<br />
+                Web Development
+              </h2>
+
+              <p>
+                Learning through academic projects,
+                experimentation, and hands-on technical practice.
+              </p>
+
+              <div class="card-footer">
+                <span>Mindoro State University</span>
+                <span>BSIT</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" id="about">
-      <div class="container split">
-        <div><p class="kicker">01 / ABOUT</p><h2 class="section-title">A learner who turns ideas into working systems.</h2></div>
-        <div class="content"><p>I'm <strong>Jhon Vincent Ordanza Hernandez</strong>, a fourth-year Bachelor of Science in Information Technology student at Mindoro State University – Calapan City Campus.</p><p>My experience comes from academic and AI-assisted projects involving web application development, database integration, software development, and practical technical learning. I am currently seeking an internship in software or web development where I can gain industry experience and continue strengthening my skills.</p><div class="about-note"><span>01</span><p>Build with honesty. Learn continuously. Improve through practice.</p></div></div>
-      </div>
-    </section>
+      <!-- =================================
+           About Section
+           ================================= -->
 
-    <section class="section muted" id="skills">
-      <div class="container"><p class="kicker">02 / CAPABILITIES</p><h2 class="section-title">A growing toolkit for real project work.</h2>
-        <div class="skills-grid">
-          <article class="skill-card"><span class="skill-index">01</span><h3>Web & Application Development</h3><p>HTML, CSS, JavaScript, Python, Django, MySQL, CRUD operations, and database integration.</p></article>
-          <article class="skill-card"><span class="skill-index">02</span><h3>Development Experience</h3><p>PHP and MVC-based applications using LavaLust, C# programming, and Windows Forms application development.</p></article>
-          <article class="skill-card"><span class="skill-index">03</span><h3>Tools & Technologies</h3><p>Git, GitHub, Visual Studio Code, Visual Studio, Bootstrap, Tailwind CSS, and Postman.</p></article>
-          <article class="skill-card"><span class="skill-index">04</span><h3>Familiar Concepts</h3><p>React, Vue.js, REST API concepts, authentication and token-based authentication concepts.</p></article>
-          <article class="skill-card"><span class="skill-index">05</span><h3>Technical Foundations</h3><p>Basic debugging, troubleshooting, Cisco Packet Tracer, and basic network configuration.</p></article>
-          <article class="skill-card highlight"><span class="skill-index">06</span><h3>Learning Approach</h3><p>Project-based practice, documentation, iterative improvement, and responsible use of AI-assisted tools.</p></article>
+      <section
+        class="section"
+        id="about"
+        aria-labelledby="about-title"
+      >
+        <div class="container split">
+          <div>
+            <p class="kicker">01 / ABOUT</p>
+
+            <h2
+              class="section-title"
+              id="about-title"
+            >
+              A learner who turns ideas into working systems.
+            </h2>
+          </div>
+
+          <div class="content">
+            <p>
+              I'm
+              <strong>Jhon Vincent Ordanza Hernandez</strong>,
+              a fourth-year Bachelor of Science in Information
+              Technology student at Mindoro State University –
+              Calapan City Campus.
+            </p>
+
+            <p>
+              My experience comes from academic projects involving
+              web application development, database integration,
+              mobile application development, software development,
+              and practical technical learning.
+            </p>
+
+            <p>
+              I am currently seeking an internship in software
+              or web development where I can gain industry
+              experience and continue strengthening my technical
+              and problem-solving skills.
+            </p>
+
+            <div class="about-note">
+              <p>
+                Build with honesty. Learn continuously.
+                Improve through practice.
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" id="projects">
-      <div class="container"><p class="kicker">03 / SELECTED PROJECTS</p><div class="heading-row"><h2 class="section-title">Projects with purpose, structure, and room to grow.</h2><span class="section-note">Academic & development work</span></div>
-        <div class="project-list">
-          <article class="project-card featured"><div class="project-count">01</div><div class="project-main"><div class="project-meta"><span>CAPSTONE PROJECT</span><span>AI-integrated system</span></div><h3>AgriScan<span>+</span></h3><p class="project-description">An agricultural system involving rice disease detection, yield prediction, monitoring, and workflow management. It incorporates AI/ML concepts for image classification and prediction within a Django-based web system.</p><div class="tags"><span>Python</span><span>Django</span><span>MySQL</span><span>JavaScript</span><span>Tailwind CSS</span></div><div class="project-bottom"><span>Focus: Agriculture + software + ML</span><span class="status">Capstone</span></div></div></article>
-          <article class="project-card"><div class="project-count">02</div><div class="project-main"><div class="project-meta"><span>FULL-STACK SYSTEM</span><span>Academic project</span></div><h3>MediTrack</h3><p class="project-description">An AI-assisted healthcare management system involving authentication, patient and doctor management, appointment scheduling, dashboards, database integration, and API-based communication.</p><div class="tags"><span>Vue.js</span><span>Node.js</span><span>Express.js</span><span>MySQL</span><span>Bootstrap</span></div></div></article>
-          <article class="project-card"><div class="project-count">03</div><div class="project-main"><div class="project-meta"><span>DATABASE WEB APP</span><span>Academic project</span></div><h3>Ella's Pizza System</h3><p class="project-description">A database-driven web application involving database connectivity and CRUD operations.</p><div class="tags"><span>PHP</span><span>MySQL</span><span>PDO</span><span>Bootstrap</span></div></div></article>
-          <article class="project-card"><div class="project-count">04</div><div class="project-main"><div class="project-meta"><span>WEB DEVELOPMENT</span><span>Academic work</span></div><h3>PHP MVC-Based Web Applications</h3><p class="project-description">Academic web applications built using MVC architecture with validation, database integration, and CRUD functionality.</p><div class="tags"><span>PHP</span><span>LavaLust MVC</span><span>MySQL</span></div></div></article>
+      <!-- =================================
+           Skills Section
+           ================================= -->
+
+      <section
+        class="section muted"
+        id="skills"
+        aria-labelledby="skills-title"
+      >
+        <div class="container">
+          <p class="kicker">02 / CAPABILITIES</p>
+
+          <h2
+            class="section-title"
+            id="skills-title"
+          >
+            A growing toolkit for real project work.
+          </h2>
+
+          <div class="skills-grid">
+            <article class="skill-card">
+              <span class="skill-index">01</span>
+
+              <h3>Web &amp; Application Development</h3>
+
+              <p>
+                HTML, CSS, JavaScript, Python, Django, MySQL,
+                CRUD operations, and database integration.
+              </p>
+            </article>
+
+            <article class="skill-card">
+              <span class="skill-index">02</span>
+
+              <h3>Programming &amp; Frameworks</h3>
+
+              <p>
+                PHP, LavaLust MVC, C# programming, Windows Forms,
+                Bootstrap, and Tailwind CSS.
+              </p>
+            </article>
+
+            <article class="skill-card">
+              <span class="skill-index">03</span>
+
+              <h3>Mobile Application Development</h3>
+
+              <p>
+                Ionic, Vue.js, Capacitor, npm-based workflows,
+                mobile-oriented interfaces, and Android
+                application packaging concepts.
+              </p>
+            </article>
+
+            <article class="skill-card">
+              <span class="skill-index">04</span>
+
+              <h3>Tools &amp; Technologies</h3>
+
+              <p>
+                Git, GitHub, GitHub Actions, Visual Studio Code,
+                Visual Studio, Postman, and Firebase exposure.
+              </p>
+            </article>
+
+            <article class="skill-card">
+              <span class="skill-index">05</span>
+
+              <h3>Familiar Concepts</h3>
+
+              <p>
+                React, Vue.js, REST API concepts, authentication,
+                token-based authentication concepts, and basic
+                debugging and troubleshooting.
+              </p>
+            </article>
+
+            <article class="skill-card highlight">
+              <span class="skill-index">06</span>
+
+              <h3>Technical Foundations</h3>
+
+              <p>
+                Cisco Packet Tracer, basic network configuration,
+                database CRUD operations, documentation, and
+                iterative project improvement.
+              </p>
+            </article>
+          </div>
         </div>
-        <p class="project-footnote">Project descriptions should be refined against the final repositories and actual contribution before formal submission.</p>
-      </div>
-    </section>
+      </section>
 
-    <section class="section muted" id="education">
-      <div class="container split"><div><p class="kicker">04 / JOURNEY</p><h2 class="section-title">Learning through education and focused training.</h2></div>
-        <div class="timeline">
-          <article><span class="timeline-marker"></span><p class="timeline-label">2023 — PRESENT</p><h3>Mindoro State University</h3><p>Bachelor of Science in Information Technology · Fourth-Year Student</p><small>Calapan City Campus</small></article>
-          <article><span class="timeline-marker"></span><p class="timeline-label">SEPTEMBER 27, 2024</p><h3>Digital Careers Expo</h3><p>DICT Region IV-B</p></article>
-          <article><span class="timeline-marker"></span><p class="timeline-label">OCTOBER 3, 2024</p><h3>Digital Awareness</h3><p>Cisco Networking Academy</p></article>
+      <!-- =================================
+           Projects Section
+           ================================= -->
+
+      <section
+        class="section"
+        id="projects"
+        aria-labelledby="projects-title"
+      >
+        <div class="container">
+          <p class="kicker">03 / SELECTED PROJECTS</p>
+
+          <div class="heading-row">
+            <h2
+              class="section-title"
+              id="projects-title"
+            >
+              Projects with purpose, structure, and room to grow.
+            </h2>
+
+            <span class="section-note">
+              Academic &amp; development work
+            </span>
+          </div>
+
+          <div class="project-list">
+            <!-- Project 01 -->
+            <article class="project-card featured">
+              <div class="project-count">01</div>
+
+              <div class="project-main">
+                <div class="project-meta">
+                  <span>CAPSTONE PROJECT</span>
+                  <span>AI-integrated system</span>
+                </div>
+
+                <h3>
+                  AgriScan<span>+</span>
+                </h3>
+
+                <p class="project-description">
+                  An agricultural system involving rice disease
+                  detection, yield prediction, field and planting
+                  monitoring, treatment-related information,
+                  and workflow management. It incorporates AI/ML
+                  concepts for image classification and prediction
+                  within a Django-based web system.
+                </p>
+
+                <div
+                  class="tags"
+                  aria-label="AgriScan+ technologies"
+                >
+                  <span>Python</span>
+                  <span>Django</span>
+                  <span>MySQL</span>
+                  <span>JavaScript</span>
+                  <span>Tailwind CSS</span>
+                  <span>AI/ML</span>
+                </div>
+
+                <div class="project-bottom">
+                  <span>
+                    Focus: Agriculture + software + ML
+                  </span>
+
+                  <div class="project-bottom-actions">
+                    <span class="status">
+                      Capstone
+                    </span>
+
+                    <a
+                      class="project-link"
+                      href="https://agriscanplus.tech"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Visit AgriScan+ live website in a new tab"
+                    >
+                      View Live Project
+
+                      <svg
+                        class="icon icon-arrow"
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M7 17 17 7" />
+                        <path d="M7 7h10v10" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project 02 -->
+            <article class="project-card">
+              <div class="project-count">02</div>
+
+              <div class="project-main">
+                <div class="project-meta">
+                  <span>FULL-STACK SYSTEM</span>
+                  <span>Academic project</span>
+                </div>
+
+                <h3>MediTrack</h3>
+
+                <p class="project-description">
+                  An academic healthcare management system involving
+                  authentication, patient and doctor management,
+                  appointment scheduling, dashboard functionality,
+                  database integration, and API-based communication.
+                </p>
+
+                <div
+                  class="tags"
+                  aria-label="MediTrack technologies"
+                >
+                  <span>Vue.js</span>
+                  <span>Node.js</span>
+                  <span>Express.js</span>
+                  <span>MySQL</span>
+                  <span>Bootstrap</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project 03 -->
+            <article class="project-card">
+              <div class="project-count">03</div>
+
+              <div class="project-main">
+                <div class="project-meta">
+                  <span>DATABASE WEB APP</span>
+                  <span>Academic project</span>
+                </div>
+
+                <h3>Ella's Pizza System</h3>
+
+                <p class="project-description">
+                  A database-driven web application involving
+                  database connectivity and CRUD operations.
+                </p>
+
+                <div
+                  class="tags"
+                  aria-label="Ella's Pizza technologies"
+                >
+                  <span>PHP</span>
+                  <span>MySQL</span>
+                  <span>PDO</span>
+                  <span>Bootstrap</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project 04 -->
+            <article class="project-card">
+              <div class="project-count">04</div>
+
+              <div class="project-main">
+                <div class="project-meta">
+                  <span>WEB DEVELOPMENT</span>
+                  <span>Academic work</span>
+                </div>
+
+                <h3>
+                  PHP MVC-Based Web Applications
+                </h3>
+
+                <p class="project-description">
+                  Academic web applications built using MVC
+                  architecture with validation, database
+                  integration, and CRUD functionality.
+                </p>
+
+                <div
+                  class="tags"
+                  aria-label="PHP MVC technologies"
+                >
+                  <span>PHP</span>
+                  <span>LavaLust MVC</span>
+                  <span>MySQL</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project 05 -->
+            <article class="project-card">
+              <div class="project-count">05</div>
+
+              <div class="project-main">
+                <div class="project-meta">
+                  <span>MOBILE APPLICATION</span>
+                  <span>Academic project</span>
+                </div>
+
+                <h3>
+                  Ionic Mobile Application
+                </h3>
+
+                <p class="project-description">
+                  Developed a mobile-oriented application using
+                  Ionic and Vue.js. Worked with Capacitor,
+                  npm-based development workflows, and GitHub
+                  Actions for Android application build and
+                  packaging concepts.
+                </p>
+
+                <div
+                  class="tags"
+                  aria-label="Ionic project technologies"
+                >
+                  <span>Ionic</span>
+                  <span>Vue.js</span>
+                  <span>Capacitor</span>
+                  <span>Android</span>
+                  <span>GitHub Actions</span>
+                </div>
+
+                <div class="project-bottom">
+                  <span>
+                    Focus: Mobile development + build workflow
+                  </span>
+
+                  <span class="status">
+                    Academic Project
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project 06 -->
+            <article class="project-card">
+              <div class="project-count">06</div>
+
+              <div class="project-main">
+                <div class="project-meta">
+                  <span>DATABASE APPLICATION</span>
+                  <span>Academic project</span>
+                </div>
+
+                <h3>
+                  Workout Activity Tracker
+                </h3>
+
+                <p class="project-description">
+                  Developed a mobile-oriented activity tracking
+                  application involving Firebase integration and
+                  CRUD functionality for creating, viewing,
+                  updating, and deleting activity records.
+                </p>
+
+                <div
+                  class="tags"
+                  aria-label="Workout Tracker technologies"
+                >
+                  <span>Ionic</span>
+                  <span>Vue.js</span>
+                  <span>Firebase</span>
+                  <span>CRUD</span>
+                </div>
+
+                <div class="project-bottom">
+                  <span>
+                    Focus: Mobile UI + database operations
+                  </span>
+
+                  <span class="status">
+                    Academic Project
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project 07 -->
+            <article class="project-card">
+              <div class="project-count">07</div>
+
+              <div class="project-main">
+                <div class="project-meta">
+                  <span>PERSONAL WEBSITE</span>
+                  <span>Responsive development</span>
+                </div>
+
+                <h3>
+                  Personal Portfolio Website
+                </h3>
+
+                <p class="project-description">
+                  Developed a responsive personal portfolio website
+                  showcasing technical skills, academic projects,
+                  career direction, and professional contact
+                  information. Includes theme switching,
+                  responsive navigation, scroll interactions,
+                  and accessible interface elements.
+                </p>
+
+                <div
+                  class="tags"
+                  aria-label="Portfolio technologies"
+                >
+                  <span>HTML</span>
+                  <span>CSS</span>
+                  <span>JavaScript</span>
+                  <span>Responsive Design</span>
+                </div>
+
+                <div class="project-bottom">
+                  <span>
+                    Focus: UI + responsive web development
+                  </span>
+
+                  <span class="status">
+                    Personal Project
+                  </span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          
         </div>
+      </section>
+
+      <!-- =================================
+           Education and Journey
+           ================================= -->
+
+      <section
+        class="section muted"
+        id="education"
+        aria-labelledby="journey-title"
+      >
+        <div class="container split">
+          <div>
+            <p class="kicker">04 / JOURNEY</p>
+
+            <h2
+              class="section-title"
+              id="journey-title"
+            >
+              Learning through education and focused training.
+            </h2>
+          </div>
+
+          <div class="timeline">
+            <!-- Education -->
+            <article>
+              <span
+                class="timeline-marker"
+                aria-hidden="true"
+              ></span>
+
+              <p class="timeline-label">
+                2023 — PRESENT
+              </p>
+
+              <h3>Mindoro State University</h3>
+
+              <p>
+                Bachelor of Science in Information Technology ·
+                Fourth-Year Student
+              </p>
+
+              <small>
+                Calapan City Campus
+              </small>
+            </article>
+
+            <!-- DCE -->
+            <article>
+              <span
+                class="timeline-marker"
+                aria-hidden="true"
+              ></span>
+
+              <p class="timeline-label">
+                SEPTEMBER 27, 2024
+              </p>
+
+              <h3>Digital Careers Expo</h3>
+
+              <p>
+                DICT Region IV-B
+              </p>
+            </article>
+
+            <!-- Digital Awareness -->
+            <article>
+              <span
+                class="timeline-marker"
+                aria-hidden="true"
+              ></span>
+
+              <p class="timeline-label">
+                OCTOBER 3, 2024
+              </p>
+
+              <h3>Digital Awareness</h3>
+
+              <p>
+                Cisco Networking Academy
+              </p>
+            </article>
+
+            <!-- Fortinet -->
+            <article>
+              <span
+                class="timeline-marker"
+                aria-hidden="true"
+              ></span>
+
+              <p class="timeline-label">
+                COMPLETED TRAINING
+              </p>
+
+              <h3>Fortinet LAN Basics</h3>
+
+              <p>
+                Networking and security fundamentals.
+              </p>
+            </article>
+
+            <!-- JavaScript -->
+            <article>
+              <span
+                class="timeline-marker"
+                aria-hidden="true"
+              ></span>
+
+              <p class="timeline-label">
+                SEPTEMBER 10–17, 2026
+              </p>
+
+              <h3>JavaScript Essentials 1</h3>
+
+              <p>
+                Cisco Networking Academy · Self-Paced Online
+                Training · 40 Hours
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================
+           Career Section
+           ================================= -->
+
+      <section
+        class="section"
+        id="career"
+        aria-labelledby="career-title"
+      >
+        <div class="container">
+          <p class="kicker">05 / CAREER DIRECTION</p>
+
+          <h2
+            class="section-title"
+            id="career-title"
+          >
+            Where I want to contribute and improve.
+          </h2>
+
+          <div class="career-grid">
+            <article>
+              <span>01</span>
+
+              <h3>Software Development</h3>
+
+              <p>
+                Developing useful applications while improving
+                programming, problem-solving, and system design
+                skills.
+              </p>
+            </article>
+
+            <article>
+              <span>02</span>
+
+              <h3>Web &amp; Backend</h3>
+
+              <p>
+                Working with interfaces, server-side logic,
+                databases, and API concepts.
+              </p>
+            </article>
+
+            <article>
+              <span>03</span>
+
+              <h3>Mobile Development</h3>
+
+              <p>
+                Exploring mobile-oriented applications using
+                Ionic, Vue.js, Capacitor, and database services.
+              </p>
+            </article>
+
+            <article>
+              <span>04</span>
+
+              <h3>IT Support</h3>
+
+              <p>
+                Strengthening troubleshooting, networking,
+                and practical technical support experience.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================
+           Contact Section
+           ================================= -->
+
+      <section
+        class="section contact-section"
+        id="contact"
+        aria-labelledby="contact-title"
+      >
+        <div class="container contact-box">
+          <p class="kicker">06 / CONTACT</p>
+
+          <h2 id="contact-title">
+            Have an opportunity or project idea?
+          </h2>
+
+          <p>
+            I'm open to learning opportunities, internship
+            discussions, project collaboration, and
+            professional connections.
+          </p>
+
+          <div class="contact-grid">
+            <!-- Email -->
+            <a
+              href="mailto:jhonvincenthernandez9@gmail.com"
+              aria-label="Send an email to Vincent Hernandez"
+            >
+              <span>Email</span>
+
+              <strong>
+                jhonvincenthernandez9@gmail.com
+
+                <svg
+                  class="icon icon-arrow"
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M7 17 17 7" />
+                  <path d="M7 7h10v10" />
+                </svg>
+              </strong>
+            </a>
+
+            <!-- Phone -->
+            <a
+              href="tel:+639500360827"
+              aria-label="Call Vincent Hernandez"
+            >
+              <span>Phone</span>
+
+              <strong>
+                +63 950 036 0827
+
+                <svg
+                  class="icon icon-arrow"
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M7 17 17 7" />
+                  <path d="M7 7h10v10" />
+                </svg>
+              </strong>
+            </a>
+
+            <!-- Location -->
+            <div>
+              <span>Location</span>
+
+              <strong>
+                San Nicolas, Naujan, Oriental Mindoro,
+                Philippines
+              </strong>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <p>
+          © <span id="year"></span>
+          Jhon Vincent Ordanza Hernandez
+        </p>
+
+        <p>
+          Designed for learning, building, and growth.
+        </p>
       </div>
-    </section>
+    </footer>
 
-    <section class="section" id="career">
-      <div class="container"><p class="kicker">05 / CAREER DIRECTION</p><h2 class="section-title">Where I want to contribute and improve.</h2><div class="career-grid">
-        <div><span>01</span><h3>Software Development</h3><p>Developing useful applications while improving programming and system design skills.</p></div>
-        <div><span>02</span><h3>Web & Backend</h3><p>Working with interfaces, server-side logic, databases, and API concepts.</p></div>
-        <div><span>03</span><h3>IT Support</h3><p>Strengthening troubleshooting, networking, and practical technical support experience.</p></div>
-      </div></div>
-    </section>
+    <!-- Back to top -->
+    <button
+      class="back-to-top"
+      id="backToTop"
+      type="button"
+      aria-label="Back to top"
+      title="Back to top"
+      hidden
+    >
+      <svg
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="m6 15 6-6 6 6" />
+      </svg>
+    </button>
 
-    <section class="section contact-section" id="contact"><div class="container contact-box"><p class="kicker">06 / CONTACT</p><h2>Have an opportunity or project idea?</h2><p>I'm open to learning opportunities, internship discussions, and professional connections.</p><div class="contact-grid"><a href="mailto:jhonvincenthernandez9@gmail.com"><span>Email</span><strong>jhonvincenthernandez9@gmail.com ↗</strong></a><a href="tel:+639500360827"><span>Phone</span><strong>+63 950 036 0827 ↗</strong></a><div><span>Location</span><strong>San Nicolas, Naujan, Oriental Mindoro, Philippines</strong></div></div></div></section>
-  </main>
-  <footer class="footer"><div class="container footer-inner"><p>© <span id="year"></span> Jhon Vincent Ordanza Hernandez</p><p>Designed for learning, building, and growth.</p></div></footer>
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
