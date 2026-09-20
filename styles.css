@@ -2178,7 +2178,8 @@ html[data-theme="light"] .footer {
 
 /* =========================================================
    PREMIUM PROJECT CAROUSEL
-   Responsive • Accessible • Theme-Safe • Premium UI
+   Button Navigation • Responsive • Accessible
+   Theme-Safe • No Native Scroll • No Swipe
 ========================================================= */
 
 
@@ -2189,6 +2190,7 @@ html[data-theme="light"] .footer {
 .project-carousel {
   position: relative;
   width: 100%;
+  max-width: 100%;
   margin-top: 48px;
 }
 
@@ -2216,12 +2218,10 @@ html[data-theme="light"] .footer {
 
 .project-carousel-heading p {
   margin: 0;
-  color: var(--muted);
+  color: var(--muted, var(--text));
   font-size: 0.95rem;
+  line-height: 1.6;
 }
-
-
-/* Project counter: 06 / 07 Projects */
 
 .project-carousel-progress {
   display: flex;
@@ -2230,7 +2230,7 @@ html[data-theme="light"] .footer {
   gap: 5px;
   flex-shrink: 0;
   white-space: nowrap;
-  color: var(--muted);
+  color: var(--muted, var(--text));
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -2240,19 +2240,33 @@ html[data-theme="light"] .footer {
   color: var(--text);
   font-size: 1.05rem;
   font-weight: 800;
+  font-variant-numeric: tabular-nums;
 }
 
 
 /* =========================================================
-   CAROUSEL VIEWPORT
+   FIXED VIEWPORT
+   No Native Scroll • No Swipe
 ========================================================= */
 
 .project-carousel-viewport {
   width: 100%;
+  max-width: 100%;
   overflow: hidden;
   padding: 8px 3px 18px;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg, 20px);
+
+  /*
+    Prevent native horizontal scrolling
+    and touch-based carousel movement.
+  */
   touch-action: pan-y;
+  overscroll-behavior: none;
+
+  /*
+    Prevent accidental text selection.
+  */
+  user-select: none;
 }
 
 
@@ -2265,8 +2279,7 @@ html[data-theme="light"] .footer {
   align-items: stretch;
   gap: 22px;
   width: max-content;
-  will-change: transform;
-  transition: none;
+  min-width: 100%;
 }
 
 
@@ -2275,36 +2288,59 @@ html[data-theme="light"] .footer {
 ========================================================= */
 
 .project-carousel-item {
+  /*
+    One primary card with a small preview
+    of the next card on smaller screens.
+  */
   flex: 0 0 min(850px, calc(100vw - 80px));
   width: min(850px, calc(100vw - 80px));
+
   min-height: 355px;
-  grid-template-columns: 75px minmax(0, 1fr);
+  min-width: 0;
 
   /*
-    Prevent the global floating animation
-    from interfering with carousel movement.
+    Disable native scrolling behavior.
+  */
+  scroll-snap-align: none;
+  scroll-snap-stop: normal;
+
+  /*
+    Prevent global floating animations
+    from interfering with the carousel.
   */
   animation: none !important;
   transform: none;
   will-change: auto;
 }
 
-
-/* Keep content readable */
-
 .project-carousel-item .project-main {
   min-width: 0;
 }
 
 
-/* Hover effect */
+/* =========================================================
+   HOVER EFFECT
+========================================================= */
 
 .project-carousel-item:hover {
   transform: translateY(-5px);
 }
 
 
-/* Featured card */
+/*
+  Disable hover movement on touch-oriented devices.
+*/
+
+@media (hover: none) {
+  .project-carousel-item:hover {
+    transform: none;
+  }
+}
+
+
+/* =========================================================
+   FEATURED CARD
+========================================================= */
 
 .project-carousel-item.featured {
   box-shadow:
@@ -2313,11 +2349,15 @@ html[data-theme="light"] .footer {
 }
 
 
-/* Active card */
+/* =========================================================
+   ACTIVE CARD
+========================================================= */
 
 .project-carousel-item.is-active {
   border-color: var(--primary);
-  box-shadow: 0 0 0 1px var(--primary);
+  box-shadow:
+    0 0 0 1px var(--primary),
+    0 12px 35px #0002;
 }
 
 
@@ -2368,7 +2408,9 @@ html[data-theme="light"] .footer {
 }
 
 
-/* Previous / Next buttons */
+/* =========================================================
+   PREVIOUS / NEXT BUTTONS
+========================================================= */
 
 .project-carousel-controls {
   display: flex;
@@ -2381,6 +2423,7 @@ html[data-theme="light"] .footer {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   width: 42px;
   height: 42px;
   padding: 0;
@@ -2391,6 +2434,7 @@ html[data-theme="light"] .footer {
   border-radius: 50%;
 
   cursor: pointer;
+
   transition:
     background-color 220ms ease,
     border-color 220ms ease,
@@ -2405,14 +2449,18 @@ html[data-theme="light"] .footer {
 }
 
 .project-carousel-control:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+  color: var(--primary);
+  border-color: var(--primary);
   transform: translateY(-2px);
 }
 
 .project-carousel-control:focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--primary);
   outline-offset: 3px;
+}
+
+.project-carousel-control:active {
+  transform: translateY(0);
 }
 
 .project-carousel-control:disabled {
@@ -2439,12 +2487,13 @@ html[data-theme="light"] .footer {
   height: 8px;
   padding: 0;
 
-  background: var(--muted);
+  background: var(--muted, var(--text));
   border: 0;
   border-radius: 999px;
-  opacity: 0.45;
 
+  opacity: 0.45;
   cursor: pointer;
+
   transition:
     width 220ms ease,
     opacity 220ms ease,
@@ -2458,12 +2507,12 @@ html[data-theme="light"] .footer {
 .project-carousel-dot.active,
 .project-carousel-dot[aria-current="true"] {
   width: 24px;
-  background: var(--accent);
+  background: var(--primary);
   opacity: 1;
 }
 
 .project-carousel-dot:focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--primary);
   outline-offset: 4px;
 }
 
@@ -2560,6 +2609,27 @@ html[data-theme="light"] .footer {
 
 
 /* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+  .project-carousel-item {
+    flex-basis: calc(100vw - 24px);
+    width: calc(100vw - 24px);
+    padding: 20px;
+  }
+
+  .project-carousel-heading p {
+    font-size: 0.88rem;
+  }
+
+  .project-carousel-progress {
+    font-size: 0.75rem;
+  }
+}
+
+
+/* =========================================================
    LIGHT THEME
 ========================================================= */
 
@@ -2585,10 +2655,6 @@ html[data-theme="light"] .project-carousel::after {
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .project-carousel-track {
-    transition: none !important;
-  }
-
   .project-carousel-item,
   .project-carousel-item:hover {
     animation: none !important;

@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const debounce = (callback, delay = 150) => {
-    let timeoutId;
+    let timeoutId = null;
 
     return (...args) => {
       window.clearTimeout(timeoutId);
@@ -73,9 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================================= */
 
   if (yearElement) {
-    yearElement.textContent = String(
-      new Date().getFullYear()
-    );
+    yearElement.textContent =
+      String(new Date().getFullYear());
   }
 
   /* =========================================
@@ -117,12 +116,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (sunIcon) {
       sunIcon.hidden = !isLight;
-      sunIcon.setAttribute("aria-hidden", String(!isLight));
+      sunIcon.setAttribute(
+        "aria-hidden",
+        String(!isLight)
+      );
     }
 
     if (moonIcon) {
       moonIcon.hidden = isLight;
-      moonIcon.setAttribute("aria-hidden", String(isLight));
+      moonIcon.setAttribute(
+        "aria-hidden",
+        String(isLight)
+      );
     }
   };
 
@@ -136,15 +141,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     themeToggle.setAttribute("aria-label", label);
     themeToggle.setAttribute("title", label);
-    themeToggle.setAttribute("aria-pressed", String(isLight));
+    themeToggle.setAttribute(
+      "aria-pressed",
+      String(isLight)
+    );
+
     themeToggle.dataset.theme = theme;
-    themeToggle.dataset.nextTheme = isLight ? "dark" : "light";
+    themeToggle.dataset.nextTheme = isLight
+      ? "dark"
+      : "light";
 
     updateThemeIcons(theme);
   };
 
   const applyTheme = (theme, shouldSave = true) => {
-    const selectedTheme = theme === "light" ? "light" : "dark";
+    const selectedTheme =
+      theme === "light" ? "light" : "dark";
 
     html.dataset.theme = selectedTheme;
     body.dataset.activeTheme = selectedTheme;
@@ -156,14 +168,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const toggleTheme = () => {
-    applyTheme(
-      getCurrentTheme() === "light" ? "dark" : "light"
-    );
-  };
-
   applyTheme(getStoredTheme() || "dark", false);
-  themeToggle?.addEventListener("click", toggleTheme);
+
+  themeToggle?.addEventListener("click", () => {
+    applyTheme(
+      getCurrentTheme() === "light"
+        ? "dark"
+        : "light"
+    );
+  });
 
   /* =========================================
      MOBILE NAVIGATION
@@ -177,7 +190,10 @@ document.addEventListener("DOMContentLoaded", () => {
       : "Open navigation menu";
 
     menuToggle.classList.toggle("is-open", isOpen);
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute(
+      "aria-expanded",
+      String(isOpen)
+    );
     menuToggle.setAttribute("aria-label", label);
     menuToggle.setAttribute("title", label);
   };
@@ -185,7 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const setMenuState = (isOpen) => {
     if (!menuToggle || !navLinks) return;
 
-    const shouldOpen = Boolean(isOpen) && isMobile();
+    const shouldOpen =
+      Boolean(isOpen) && isMobile();
 
     navLinks.classList.toggle("open", shouldOpen);
 
@@ -202,7 +219,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const closeMenu = (restoreFocus = false) => {
-    const wasOpen = navLinks?.classList.contains("open");
+    const wasOpen =
+      navLinks?.classList.contains("open");
 
     setMenuState(false);
 
@@ -215,11 +233,15 @@ document.addEventListener("DOMContentLoaded", () => {
     setMenuState(false);
 
     menuToggle.addEventListener("click", () => {
-      setMenuState(!navLinks.classList.contains("open"));
+      setMenuState(
+        !navLinks.classList.contains("open")
+      );
     });
 
     $$("a", navLinks).forEach((link) => {
-      link.addEventListener("click", () => closeMenu());
+      link.addEventListener("click", () => {
+        closeMenu();
+      });
     });
   }
 
@@ -232,31 +254,42 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener(
     "resize",
     () => {
-      if (!isMobile()) closeMenu();
+      if (!isMobile()) {
+        closeMenu();
+      }
     },
     { passive: true }
   );
 
   /* =========================================
-     SCROLL PROGRESS AND BACK TO TOP
+     PAGE SCROLL UI
   ========================================= */
 
   const updateScrollUI = () => {
     const documentHeight =
-      document.documentElement.scrollHeight - window.innerHeight;
+      document.documentElement.scrollHeight -
+      window.innerHeight;
 
-    const currentScroll = window.scrollY || window.pageYOffset || 0;
+    const currentScroll =
+      window.scrollY ||
+      window.pageYOffset ||
+      0;
 
     const percentage =
       documentHeight > 0
         ? Math.min(
             100,
-            Math.max(0, (currentScroll / documentHeight) * 100)
+            Math.max(
+              0,
+              (currentScroll / documentHeight) * 100
+            )
           )
         : 0;
 
     if (scrollProgress) {
-      scrollProgress.style.width = `${percentage}%`;
+      scrollProgress.style.width =
+        `${percentage}%`;
+
       scrollProgress.setAttribute(
         "aria-valuenow",
         String(Math.round(percentage))
@@ -264,10 +297,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (backToTop) {
-      const shouldShow = currentScroll > SCROLL_TOP_THRESHOLD;
+      const shouldShow =
+        currentScroll > SCROLL_TOP_THRESHOLD;
 
       backToTop.hidden = !shouldShow;
       backToTop.tabIndex = shouldShow ? 0 : -1;
+
       backToTop.setAttribute(
         "aria-hidden",
         String(!shouldShow)
@@ -281,18 +316,26 @@ document.addEventListener("DOMContentLoaded", () => {
     if (scrollTicking) return;
 
     scrollTicking = true;
+
     window.requestAnimationFrame(updateScrollUI);
   };
 
-  window.addEventListener("scroll", requestScrollUpdate, {
-    passive: true,
-  });
+  window.addEventListener(
+    "scroll",
+    requestScrollUpdate,
+    { passive: true }
+  );
 
-  window.addEventListener("resize", requestScrollUpdate, {
-    passive: true,
-  });
+  window.addEventListener(
+    "resize",
+    requestScrollUpdate,
+    { passive: true }
+  );
 
-  window.addEventListener("load", requestScrollUpdate);
+  window.addEventListener(
+    "load",
+    requestScrollUpdate
+  );
 
   backToTop?.addEventListener("click", () => {
     window.scrollTo({
@@ -303,35 +346,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* =========================================
      PROJECT CAROUSEL
-     SYNCHRONIZED COUNTER + ACTIVE OUTLINE
+     INFINITE CONTINUOUS MOVEMENT
+     SYNCHRONIZED COUNTER, DOTS, OUTLINE
+     BUTTON, WHEEL, TOUCH AND DRAG SUPPORT
   ========================================= */
 
   const initializeProjectCarousel = () => {
-    const carousel = $('[data-carousel="projects"]');
+    const carousel =
+      $('[data-carousel="projects"]');
 
     if (!carousel) return;
 
-    const viewport = $(".project-carousel-viewport", carousel);
-    const track = $(".project-carousel-track", carousel);
+    const viewport =
+      $(".project-carousel-viewport", carousel);
 
-    const previousButton = $("#projectCarouselPrevious", carousel);
-    const nextButton = $("#projectCarouselNext", carousel);
+    const track =
+      $(".project-carousel-track", carousel);
 
-    const currentCounter = $("#projectCarouselCurrent", carousel);
-    const totalCounter = $("#projectCarouselTotal", carousel);
+    const previousButton =
+      $("#projectCarouselPrevious", carousel);
 
-    const dots = $$(".project-carousel-dot", carousel);
-    const originalCards = $$(".project-carousel-item", track);
+    const nextButton =
+      $("#projectCarouselNext", carousel);
 
-    if (!viewport || !track || originalCards.length <= 1) {
+    const currentCounter =
+      $("#projectCarouselCurrent", carousel);
+
+    const totalCounter =
+      $("#projectCarouselTotal", carousel);
+
+    const dots =
+      $$(".project-carousel-dot", carousel);
+
+    const originalCards =
+      $$(".project-carousel-item", track);
+
+    if (
+      !viewport ||
+      !track ||
+      originalCards.length <= 1
+    ) {
       return;
     }
 
     const totalProjects = originalCards.length;
-    const AUTO_SPEED = 150;
-    const BUTTON_RESUME_DELAY = 850;
 
-    const fragment = document.createDocumentFragment();
+    const AUTO_SPEED = 150;
+    const RESUME_DELAY = 1000;
+    const SNAP_DELAY = 120;
+
+    /* -----------------------------------------
+       CREATE CLONES
+    ----------------------------------------- */
+
+    const fragment =
+      document.createDocumentFragment();
 
     originalCards.forEach((card) => {
       const clone = card.cloneNode(true);
@@ -344,20 +413,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     track.appendChild(fragment);
 
-    const cards = $$(".project-carousel-item", track);
+    const cards =
+      $$(".project-carousel-item", track);
 
     let currentOffset = 0;
     let activeIndex = 0;
+    let lastCardIndex = -1;
+
     let animationFrameId = null;
     let lastTimestamp = 0;
+
     let isRunning = false;
     let isPaused = false;
     let isPageHidden = document.hidden;
-    let isButtonOverride = false;
+    let isUserInteracting = false;
+
     let resumeTimer = null;
+    let snapTimer = null;
+
+    let pointerId = null;
+    let pointerStartX = 0;
+    let pointerStartOffset = 0;
+    let isDragging = false;
+    let hasDragged = false;
+
+    /* -----------------------------------------
+       CAROUSEL METRICS
+    ----------------------------------------- */
 
     const getGap = () => {
-      const styles = window.getComputedStyle(track);
+      const styles =
+        window.getComputedStyle(track);
 
       return (
         parseFloat(styles.columnGap) ||
@@ -371,153 +457,226 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!firstCard) return 0;
 
-      return firstCard.getBoundingClientRect().width + getGap();
+      return (
+        firstCard.getBoundingClientRect().width +
+        getGap()
+      );
     };
 
-    const getOriginalTrackWidth = () =>
+    const getLoopWidth = () =>
       getStepWidth() * totalProjects;
 
     const normalizeOffset = () => {
-      const width = getOriginalTrackWidth();
+      const loopWidth = getLoopWidth();
 
-      if (width <= 0) return;
+      if (loopWidth <= 0) return;
 
-      currentOffset =
-        ((currentOffset % width) + width) % width;
+      while (currentOffset >= loopWidth) {
+        currentOffset -= loopWidth;
+      }
+
+      while (currentOffset < 0) {
+        currentOffset += loopWidth;
+      }
     };
 
-    const getNearestProjectIndex = () => {
+    const getNearestCardIndex = () => {
       const stepWidth = getStepWidth();
 
       if (stepWidth <= 0) return 0;
 
-      const rawIndex = Math.round(currentOffset / stepWidth);
-
-      return (
-        ((rawIndex % totalProjects) + totalProjects) %
-        totalProjects
+      const rawIndex = Math.round(
+        currentOffset / stepWidth
       );
+
+      return Math.min(
+        cards.length - 1,
+        Math.max(0, rawIndex)
+      );
+    };
+
+    const getNearestProjectIndex = () => {
+      const cardIndex =
+        getNearestCardIndex();
+
+      return cardIndex % totalProjects;
+    };
+
+    /* -----------------------------------------
+       SINGLE SOURCE OF TRUTH
+    ----------------------------------------- */
+
+    const getCurrentCard = () => {
+      const cardIndex =
+        getNearestCardIndex();
+
+      return cards[cardIndex] || null;
     };
 
     const updateCounter = () => {
       if (currentCounter) {
-        currentCounter.textContent = String(
-          activeIndex + 1
-        ).padStart(2, "0");
+        currentCounter.textContent =
+          String(activeIndex + 1).padStart(2, "0");
       }
 
       if (totalCounter) {
-        totalCounter.textContent = String(
-          totalProjects
-        ).padStart(2, "0");
+        totalCounter.textContent =
+          String(totalProjects).padStart(2, "0");
       }
     };
 
     const updateDots = () => {
       dots.forEach((dot, index) => {
-        const isActive = index === activeIndex;
+        const isActive =
+          index === activeIndex;
 
-        dot.classList.toggle("active", isActive);
-        dot.classList.toggle("is-active", isActive);
+        dot.classList.toggle(
+          "active",
+          isActive
+        );
+
+        dot.classList.toggle(
+          "is-active",
+          isActive
+        );
 
         if (isActive) {
-          dot.setAttribute("aria-current", "true");
+          dot.setAttribute(
+            "aria-current",
+            "true"
+          );
         } else {
           dot.removeAttribute("aria-current");
         }
       });
     };
 
-    /*
-      Important fix:
-      The active outline is synchronized with the
-      current project index. Both original cards
-      and cloned cards are updated.
-    */
-
     const updateActiveClasses = () => {
-      cards.forEach((card, index) => {
-        const originalIndex = index % totalProjects;
-        const isClone = card.dataset.carouselClone === "true";
+      const currentCard =
+        getCurrentCard();
 
-        const isActive =
-          originalIndex === activeIndex && !isClone;
-
-        card.classList.toggle("is-active", isActive);
+      cards.forEach((card) => {
+        card.classList.toggle(
+          "is-active",
+          card === currentCard
+        );
       });
     };
 
     const updateAccessibility = () => {
-      cards.forEach((card, index) => {
-        const originalIndex = index % totalProjects;
-        const isOriginal = !card.dataset.carouselClone;
+      const currentCard =
+        getCurrentCard();
 
-        const isActive =
-          originalIndex === activeIndex && isOriginal;
+      cards.forEach((card) => {
+        const isCurrent =
+          card === currentCard;
 
-        card.setAttribute("aria-hidden", String(!isActive));
+        const isClone =
+          card.dataset.carouselClone === "true";
 
-        if (isActive) {
-          card.removeAttribute("tabindex");
-        } else {
+        /*
+          The visible clone can receive focus.
+          This prevents the outline and logical
+          project state from becoming desynchronized.
+        */
+
+        card.setAttribute(
+          "aria-hidden",
+          String(!isCurrent)
+        );
+
+        if ("inert" in card) {
+          card.inert = !isCurrent;
+        }
+
+        if (!isCurrent || isClone) {
           card.setAttribute("tabindex", "-1");
+        } else {
+          card.removeAttribute("tabindex");
         }
       });
     };
 
-    const updateActiveProject = () => {
-      const nextIndex = getNearestProjectIndex();
+    const updateUI = (force = false) => {
+      const nextIndex =
+        getNearestProjectIndex();
 
-      if (nextIndex === activeIndex) return;
+      const currentCard =
+        getCurrentCard();
+
+      const currentCardIndex =
+        getNearestCardIndex();
+
+      const projectChanged =
+        nextIndex !== activeIndex;
+
+      const cardChanged =
+        currentCardIndex !== lastCardIndex;
 
       activeIndex = nextIndex;
 
-      updateCounter();
-      updateDots();
-      updateActiveClasses();
-      updateAccessibility();
+      if (force || projectChanged) {
+        updateCounter();
+        updateDots();
+      }
+
+      if (force || cardChanged) {
+        updateActiveClasses();
+        updateAccessibility();
+      }
+
+      lastCardIndex = currentCardIndex;
     };
 
-    const updateUI = () => {
-      activeIndex = getNearestProjectIndex();
-
-      updateCounter();
-      updateDots();
-      updateActiveClasses();
-      updateAccessibility();
-    };
+    /* -----------------------------------------
+       TRACK RENDERING
+    ----------------------------------------- */
 
     const renderTrack = () => {
       track.style.transition = "none";
+
       track.style.transform =
         `translate3d(-${currentOffset}px, 0, 0)`;
     };
 
+    const renderAndSync = () => {
+      normalizeOffset();
+      renderTrack();
+      updateUI();
+    };
+
+    /* -----------------------------------------
+       ANIMATION
+    ----------------------------------------- */
+
     const stopAnimation = () => {
       isRunning = false;
+      lastTimestamp = 0;
 
       if (animationFrameId !== null) {
-        window.cancelAnimationFrame(animationFrameId);
+        window.cancelAnimationFrame(
+          animationFrameId
+        );
+
         animationFrameId = null;
       }
-
-      lastTimestamp = 0;
     };
 
     const animationLoop = (timestamp) => {
+      if (!isRunning) return;
+
       if (
-        !isRunning ||
         isPaused ||
         isPageHidden ||
-        isButtonOverride ||
+        isUserInteracting ||
         prefersReducedMotion()
       ) {
         lastTimestamp = timestamp;
 
-        if (isRunning) {
-          animationFrameId =
-            window.requestAnimationFrame(animationLoop);
-        }
+        animationFrameId =
+          window.requestAnimationFrame(
+            animationLoop
+          );
 
         return;
       }
@@ -532,25 +691,29 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       lastTimestamp = timestamp;
-      currentOffset += (AUTO_SPEED * elapsed) / 1000;
 
-      normalizeOffset();
-      renderTrack();
-      updateActiveProject();
+      currentOffset +=
+        (AUTO_SPEED * elapsed) / 1000;
+
+      renderAndSync();
 
       animationFrameId =
-        window.requestAnimationFrame(animationLoop);
+        window.requestAnimationFrame(
+          animationLoop
+        );
     };
 
     const startAnimation = () => {
-      if (prefersReducedMotion() || isPageHidden) return;
-      if (isRunning) return;
+      if (prefersReducedMotion()) return;
+      if (isPageHidden || isRunning) return;
 
       isRunning = true;
       lastTimestamp = 0;
 
       animationFrameId =
-        window.requestAnimationFrame(animationLoop);
+        window.requestAnimationFrame(
+          animationLoop
+        );
     };
 
     const pauseAnimation = () => {
@@ -561,6 +724,10 @@ document.addEventListener("DOMContentLoaded", () => {
       isPaused = false;
     };
 
+    /* -----------------------------------------
+       INTERACTION TIMERS
+    ----------------------------------------- */
+
     const clearResumeTimer = () => {
       if (resumeTimer !== null) {
         window.clearTimeout(resumeTimer);
@@ -568,16 +735,56 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
 
+    const clearSnapTimer = () => {
+      if (snapTimer !== null) {
+        window.clearTimeout(snapTimer);
+        snapTimer = null;
+      }
+    };
+
     const scheduleResume = () => {
       clearResumeTimer();
 
-      isButtonOverride = true;
-
       resumeTimer = window.setTimeout(() => {
-        isButtonOverride = false;
+        isUserInteracting = false;
         resumeTimer = null;
-      }, BUTTON_RESUME_DELAY);
+      }, RESUME_DELAY);
     };
+
+    const scheduleSnap = () => {
+      clearSnapTimer();
+
+      snapTimer = window.setTimeout(() => {
+        snapToNearestProject();
+        snapTimer = null;
+      }, SNAP_DELAY);
+    };
+
+    const markUserInteraction = () => {
+      isUserInteracting = true;
+      scheduleResume();
+    };
+
+    /* -----------------------------------------
+       SNAP TO CURRENT PROJECT
+    ----------------------------------------- */
+
+    const snapToNearestProject = () => {
+      const stepWidth = getStepWidth();
+
+      if (stepWidth <= 0) return;
+
+      currentOffset =
+        Math.round(currentOffset / stepWidth) *
+        stepWidth;
+
+      normalizeOffset();
+      renderAndSync();
+    };
+
+    /* -----------------------------------------
+       BUTTON AND DOT NAVIGATION
+    ----------------------------------------- */
 
     const moveToProject = (targetIndex) => {
       const stepWidth = getStepWidth();
@@ -585,39 +792,54 @@ document.addEventListener("DOMContentLoaded", () => {
       if (stepWidth <= 0) return;
 
       const normalizedIndex =
-        ((targetIndex % totalProjects) + totalProjects) %
+        ((targetIndex % totalProjects) +
+          totalProjects) %
         totalProjects;
 
-      const currentProject = getNearestProjectIndex();
+      const currentProject =
+        getNearestProjectIndex();
 
-      let difference = normalizedIndex - currentProject;
+      let difference =
+        normalizedIndex - currentProject;
 
-      if (difference > totalProjects / 2) {
+      if (
+        difference >
+        totalProjects / 2
+      ) {
         difference -= totalProjects;
       }
 
-      if (difference < -totalProjects / 2) {
+      if (
+        difference <
+        -totalProjects / 2
+      ) {
         difference += totalProjects;
       }
 
-      currentOffset += difference * stepWidth;
+      currentOffset +=
+        difference * stepWidth;
 
-      normalizeOffset();
-      renderTrack();
-
-      activeIndex = normalizedIndex;
-
-      updateUI();
-      scheduleResume();
+      renderAndSync();
+      markUserInteraction();
     };
 
-    previousButton?.addEventListener("click", () => {
-      moveToProject(getNearestProjectIndex() - 1);
-    });
+    previousButton?.addEventListener(
+      "click",
+      () => {
+        moveToProject(
+          getNearestProjectIndex() - 1
+        );
+      }
+    );
 
-    nextButton?.addEventListener("click", () => {
-      moveToProject(getNearestProjectIndex() + 1);
-    });
+    nextButton?.addEventListener(
+      "click",
+      () => {
+        moveToProject(
+          getNearestProjectIndex() + 1
+        );
+      }
+    );
 
     dots.forEach((dot, index) => {
       dot.type = "button";
@@ -627,53 +849,250 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    carousel.addEventListener("mouseenter", pauseAnimation);
-    carousel.addEventListener("mouseleave", resumeAnimation);
-    carousel.addEventListener("focusin", pauseAnimation);
+    /* -----------------------------------------
+       POINTER DRAG / TOUCH SWIPE
+    ----------------------------------------- */
 
-    carousel.addEventListener("focusout", (event) => {
-      if (!carousel.contains(event.relatedTarget)) {
-        resumeAnimation();
+    const handlePointerDown = (event) => {
+      if (event.pointerType === "mouse" &&
+          event.button !== 0) {
+        return;
       }
-    });
 
-    document.addEventListener("visibilitychange", () => {
-      isPageHidden = document.hidden;
+      pointerId = event.pointerId;
+      pointerStartX = event.clientX;
+      pointerStartOffset = currentOffset;
 
-      if (isPageHidden) {
-        stopAnimation();
-      } else {
-        startAnimation();
+      isDragging = false;
+      hasDragged = false;
+
+      clearSnapTimer();
+      markUserInteraction();
+
+      viewport.setPointerCapture?.(
+        event.pointerId
+      );
+    };
+
+    const handlePointerMove = (event) => {
+      if (event.pointerId !== pointerId) {
+        return;
       }
-    });
+
+      const deltaX =
+        event.clientX - pointerStartX;
+
+      if (!isDragging && Math.abs(deltaX) < 6) {
+        return;
+      }
+
+      isDragging = true;
+      hasDragged = true;
+
+      event.preventDefault();
+
+      currentOffset =
+        pointerStartOffset - deltaX;
+
+      renderAndSync();
+      markUserInteraction();
+    };
+
+    const finishPointerInteraction = (event) => {
+      if (event.pointerId !== pointerId) {
+        return;
+      }
+
+      if (isDragging) {
+        snapToNearestProject();
+      }
+
+      viewport.releasePointerCapture?.(
+        event.pointerId
+      );
+
+      pointerId = null;
+      isDragging = false;
+
+      scheduleResume();
+    };
+
+    viewport.addEventListener(
+      "pointerdown",
+      handlePointerDown
+    );
+
+    viewport.addEventListener(
+      "pointermove",
+      handlePointerMove,
+      { passive: false }
+    );
+
+    viewport.addEventListener(
+      "pointerup",
+      finishPointerInteraction
+    );
+
+    viewport.addEventListener(
+      "pointercancel",
+      finishPointerInteraction
+    );
+
+    viewport.addEventListener(
+      "lostpointercapture",
+      () => {
+        pointerId = null;
+        isDragging = false;
+      }
+    );
+
+    viewport.addEventListener(
+      "click",
+      (event) => {
+        if (hasDragged) {
+          event.preventDefault();
+          event.stopPropagation();
+          hasDragged = false;
+        }
+      },
+      true
+    );
+
+    /* -----------------------------------------
+       WHEEL SCROLL OVERRIDE
+    ----------------------------------------- */
+
+    viewport.addEventListener(
+      "wheel",
+      (event) => {
+        const horizontalDelta =
+          Math.abs(event.deltaX) >
+          Math.abs(event.deltaY)
+            ? event.deltaX
+            : event.shiftKey
+              ? event.deltaY
+              : 0;
+
+        if (!horizontalDelta) return;
+
+        event.preventDefault();
+
+        currentOffset += horizontalDelta;
+
+        renderAndSync();
+        markUserInteraction();
+        scheduleSnap();
+      },
+      { passive: false }
+    );
+
+    /* -----------------------------------------
+       HOVER AND FOCUS
+    ----------------------------------------- */
+
+    carousel.addEventListener(
+      "mouseenter",
+      pauseAnimation
+    );
+
+    carousel.addEventListener(
+      "mouseleave",
+      resumeAnimation
+    );
+
+    carousel.addEventListener(
+      "focusin",
+      pauseAnimation
+    );
+
+    carousel.addEventListener(
+      "focusout",
+      (event) => {
+        if (
+          !carousel.contains(event.relatedTarget)
+        ) {
+          resumeAnimation();
+        }
+      }
+    );
+
+    /* -----------------------------------------
+       PAGE VISIBILITY
+    ----------------------------------------- */
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+        isPageHidden = document.hidden;
+
+        if (isPageHidden) {
+          stopAnimation();
+        } else {
+          startAnimation();
+        }
+      }
+    );
+
+    /* -----------------------------------------
+       RESPONSIVE RESIZE
+    ----------------------------------------- */
 
     const handleResize = debounce(() => {
-      normalizeOffset();
-      renderTrack();
-      updateUI();
+      const currentProject =
+        getNearestProjectIndex();
+
+      const stepWidth = getStepWidth();
+
+      if (stepWidth > 0) {
+        currentOffset =
+          currentProject * stepWidth;
+      }
+
+      renderAndSync();
     }, 150);
 
-    window.addEventListener("resize", handleResize, {
-      passive: true,
-    });
+    window.addEventListener(
+      "resize",
+      handleResize,
+      { passive: true }
+    );
 
-    const handleMotionChange = () => {
+    /* -----------------------------------------
+       REDUCED MOTION
+    ----------------------------------------- */
+
+    const handleCarouselMotionChange = () => {
       if (prefersReducedMotion()) {
         stopAnimation();
-        renderTrack();
+        renderAndSync();
       } else {
         startAnimation();
       }
     };
 
-    if (typeof motionQuery.addEventListener === "function") {
-      motionQuery.addEventListener("change", handleMotionChange);
-    } else if (typeof motionQuery.addListener === "function") {
-      motionQuery.addListener("change", handleMotionChange);
+    if (
+      typeof motionQuery.addEventListener ===
+      "function"
+    ) {
+      motionQuery.addEventListener(
+        "change",
+        handleCarouselMotionChange
+      );
+    } else if (
+      typeof motionQuery.addListener ===
+      "function"
+    ) {
+      motionQuery.addListener(
+        handleCarouselMotionChange
+      );
     }
 
-    updateUI();
+    /* -----------------------------------------
+       INITIALIZE
+    ----------------------------------------- */
+
     renderTrack();
+    updateUI(true);
 
     if (!prefersReducedMotion()) {
       startAnimation();
@@ -699,7 +1118,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const showAllRevealItems = () => {
     revealItems.forEach((item) => {
-      item.classList.add("reveal-item", "is-visible");
+      item.classList.add(
+        "reveal-item",
+        "is-visible"
+      );
+
       item.style.removeProperty("--reveal-delay");
     });
   };
@@ -722,7 +1145,10 @@ document.addEventListener("DOMContentLoaded", () => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
 
-          entry.target.classList.add("is-visible");
+          entry.target.classList.add(
+            "is-visible"
+          );
+
           observer.unobserve(entry.target);
         });
       },
@@ -768,16 +1194,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   $$('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (event) => {
-      const targetId = link.getAttribute("href");
+      const targetId =
+        link.getAttribute("href");
 
-      if (!targetId || targetId === "#" || targetId.length < 2) {
+      if (
+        !targetId ||
+        targetId === "#" ||
+        targetId.length < 2
+      ) {
         return;
       }
 
       let targetElement;
 
       try {
-        targetElement = document.querySelector(targetId);
+        targetElement =
+          document.querySelector(targetId);
       } catch {
         return;
       }
@@ -790,7 +1222,11 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollToTarget(targetElement);
 
       if (window.history?.pushState) {
-        window.history.pushState(null, "", targetId);
+        window.history.pushState(
+          null,
+          "",
+          targetId
+        );
       }
     });
   });
@@ -809,7 +1245,10 @@ document.addEventListener("DOMContentLoaded", () => {
     relValues.add("noopener");
     relValues.add("noreferrer");
 
-    link.setAttribute("rel", [...relValues].join(" "));
+    link.setAttribute(
+      "rel",
+      [...relValues].join(" ")
+    );
   });
 
   /* =========================================
@@ -817,31 +1256,48 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================================= */
 
   const sections = $$("main section[id]");
-  const navigationLinks = $$('.nav-links a[href^="#"]');
 
-  const trackedSections = sections.filter((section) =>
-    navigationLinks.some(
-      (link) =>
-        link.getAttribute("href") === `#${section.id}`
-    )
+  const navigationLinks =
+    $$('.nav-links a[href^="#"]');
+
+  const trackedSections = sections.filter(
+    (section) =>
+      navigationLinks.some(
+        (link) =>
+          link.getAttribute("href") ===
+          `#${section.id}`
+      )
   );
 
   const getSectionTop = (section) =>
-    section.getBoundingClientRect().top + window.scrollY;
+    section.getBoundingClientRect().top +
+    window.scrollY;
 
   const setActiveNavigation = (sectionId) => {
-    if (!sectionId || sectionId === activeSectionId) return;
+    if (
+      !sectionId ||
+      sectionId === activeSectionId
+    ) {
+      return;
+    }
 
     activeSectionId = sectionId;
 
     navigationLinks.forEach((link) => {
       const isActive =
-        link.getAttribute("href") === `#${sectionId}`;
+        link.getAttribute("href") ===
+        `#${sectionId}`;
 
-      link.classList.toggle("active", isActive);
+      link.classList.toggle(
+        "active",
+        isActive
+      );
 
       if (isActive) {
-        link.setAttribute("aria-current", "page");
+        link.setAttribute(
+          "aria-current",
+          "page"
+        );
       } else {
         link.removeAttribute("aria-current");
       }
@@ -854,12 +1310,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const activationLine =
       window.scrollY +
       getHeaderHeight() +
-      Math.min(window.innerHeight * 0.28, 220);
+      Math.min(
+        window.innerHeight * 0.28,
+        220
+      );
 
-    let currentSection = trackedSections[0];
+    let currentSection =
+      trackedSections[0];
 
     trackedSections.forEach((section) => {
-      if (getSectionTop(section) <= activationLine) {
+      if (
+        getSectionTop(section) <=
+        activationLine
+      ) {
         currentSection = section;
       }
     });
@@ -879,15 +1342,22 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (trackedSections.length) {
-    window.addEventListener("scroll", requestNavigationUpdate, {
-      passive: true,
-    });
+    window.addEventListener(
+      "scroll",
+      requestNavigationUpdate,
+      { passive: true }
+    );
 
-    window.addEventListener("resize", requestNavigationUpdate, {
-      passive: true,
-    });
+    window.addEventListener(
+      "resize",
+      requestNavigationUpdate,
+      { passive: true }
+    );
 
-    window.addEventListener("load", requestNavigationUpdate);
+    window.addEventListener(
+      "load",
+      requestNavigationUpdate
+    );
   }
 
   /* =========================================
@@ -917,27 +1387,51 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const typeNext = () => {
-    if (!typingText || prefersReducedMotion()) return;
-
-    const currentRole = typingRoles[roleIndex];
-
-    if (!deleting && charIndex === currentRole.length) {
-      deleting = true;
-
-      typingTimer = window.setTimeout(typeNext, 1700);
+    if (
+      !typingText ||
+      prefersReducedMotion()
+    ) {
       return;
     }
 
-    if (deleting && charIndex === 0) {
-      deleting = false;
-      roleIndex = (roleIndex + 1) % typingRoles.length;
+    const currentRole =
+      typingRoles[roleIndex];
 
-      typingTimer = window.setTimeout(typeNext, 420);
+    if (
+      !deleting &&
+      charIndex === currentRole.length
+    ) {
+      deleting = true;
+
+      typingTimer = window.setTimeout(
+        typeNext,
+        1700
+      );
+
+      return;
+    }
+
+    if (
+      deleting &&
+      charIndex === 0
+    ) {
+      deleting = false;
+
+      roleIndex =
+        (roleIndex + 1) % typingRoles.length;
+
+      typingTimer = window.setTimeout(
+        typeNext,
+        420
+      );
+
       return;
     }
 
     charIndex += deleting ? -1 : 1;
-    typingText.textContent = currentRole.slice(0, charIndex);
+
+    typingText.textContent =
+      currentRole.slice(0, charIndex);
 
     typingTimer = window.setTimeout(
       typeNext,
@@ -951,7 +1445,8 @@ document.addEventListener("DOMContentLoaded", () => {
     stopTyping();
 
     if (prefersReducedMotion()) {
-      typingText.textContent = typingRoles[0];
+      typingText.textContent =
+        typingRoles[0];
 
       if (typingCursor) {
         typingCursor.hidden = true;
@@ -967,9 +1462,13 @@ document.addEventListener("DOMContentLoaded", () => {
     roleIndex = 0;
     charIndex = 0;
     deleting = false;
+
     typingText.textContent = "";
 
-    typingTimer = window.setTimeout(typeNext, 500);
+    typingTimer = window.setTimeout(
+      typeNext,
+      500
+    );
   };
 
   initializeTyping();
@@ -984,7 +1483,8 @@ document.addEventListener("DOMContentLoaded", () => {
       showAllRevealItems();
 
       if (typingText) {
-        typingText.textContent = typingRoles[0];
+        typingText.textContent =
+          typingRoles[0];
       }
 
       if (typingCursor) {
@@ -996,13 +1496,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  if (typeof motionQuery.addEventListener === "function") {
+  if (
+    typeof motionQuery.addEventListener ===
+    "function"
+  ) {
     motionQuery.addEventListener(
       "change",
       handleMotionPreferenceChange
     );
-  } else if (typeof motionQuery.addListener === "function") {
-    motionQuery.addListener(handleMotionPreferenceChange);
+  } else if (
+    typeof motionQuery.addListener ===
+    "function"
+  ) {
+    motionQuery.addListener(
+      "change",
+      handleMotionPreferenceChange
+    );
   }
 
   /* =========================================
@@ -1018,7 +1527,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (backToTop) {
     backToTop.hidden = true;
     backToTop.tabIndex = -1;
-    backToTop.setAttribute("aria-hidden", "true");
+
+    backToTop.setAttribute(
+      "aria-hidden",
+      "true"
+    );
   }
 
   updateScrollUI();

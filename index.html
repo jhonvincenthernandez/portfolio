@@ -71,11 +71,10 @@
       href="assets/favicon.png"
     />
 
-    <title>
-      Vincent. | Portfolio
-    </title>
+    <title>Vincent. | Portfolio</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+
     <link
       rel="preconnect"
       href="https://fonts.gstatic.com"
@@ -112,7 +111,7 @@
       Skip to main content
     </a>
 
-    <!-- Scroll progress -->
+    <!-- Page scroll progress -->
     <div
       class="scroll-progress"
       id="scrollProgress"
@@ -275,10 +274,7 @@
 
     <!-- Main content -->
     <main id="main-content">
-      <!-- =================================
-           Hero Section
-           ================================= -->
-
+      <!-- Hero Section -->
       <section
         class="hero section"
         id="home"
@@ -295,8 +291,22 @@
               HELLO, I'M JHON VINCENT
             </p>
 
-            <p class="typing-line reveal-on-load" aria-label="Career focus">
-              <span class="typing-prefix">Focused on </span><span id="typingText" class="typing-text" aria-live="polite"></span><span class="typing-cursor" aria-hidden="true"></span>
+            <p
+              class="typing-line reveal-on-load"
+              aria-label="Career focus"
+            >
+              <span class="typing-prefix">Focused on </span>
+
+              <span
+                id="typingText"
+                class="typing-text"
+                aria-live="polite"
+              ></span>
+
+              <span
+                class="typing-cursor"
+                aria-hidden="true"
+              ></span>
             </p>
 
             <h1
@@ -440,10 +450,7 @@
         </div>
       </section>
 
-      <!-- =================================
-           About Section
-           ================================= -->
-
+      <!-- About Section -->
       <section
         class="section"
         id="about"
@@ -494,10 +501,7 @@
         </div>
       </section>
 
-      <!-- =================================
-           Skills Section
-           ================================= -->
-
+      <!-- Skills Section -->
       <section
         class="section muted"
         id="skills"
@@ -586,11 +590,7 @@
         </div>
       </section>
 
-      <!-- =================================
-          Projects Section
-          Premium Auto-Scrolling Horizontal Carousel
-          ================================= -->
-
+      <!-- Projects Section -->
       <section
         class="section"
         id="projects"
@@ -615,16 +615,18 @@
           <div
             class="project-carousel"
             data-carousel="projects"
-            aria-label="Selected projects carousel"
+            role="region"
+            aria-roledescription="carousel"
+            aria-labelledby="projects-title"
           >
-
             <!-- Carousel Header -->
             <div class="project-carousel-header">
               <div class="project-carousel-heading">
                 <h3>Featured Projects</h3>
 
                 <p>
-                  Selected work and development projects
+                  Swipe to explore projects, or use the
+                  navigation controls.
                 </p>
               </div>
 
@@ -651,15 +653,27 @@
               </div>
             </div>
 
-
             <!-- Carousel Viewport -->
-            <div class="project-carousel-viewport">
-              <div class="project-carousel-track">
-
+            <div
+              class="project-carousel-viewport"
+              id="projectCarouselViewport"
+              tabindex="0"
+              role="group"
+              aria-roledescription="slide"
+              aria-label="Featured project slides"
+            >
+              <div
+                class="project-carousel-track"
+                id="projectCarouselTrack"
+                role="list"
+                aria-live="polite"
+              >
                 <!-- Project 01 -->
                 <article
                   class="project-card featured project-carousel-item is-active"
                   data-project-index="0"
+                  role="listitem"
+                  aria-roledescription="slide"
                   aria-label="Project 1 of 7: AgriScan+"
                 >
                   <div class="project-count">01</div>
@@ -735,11 +749,12 @@
                   </div>
                 </article>
 
-
                 <!-- Project 02 -->
                 <article
                   class="project-card project-carousel-item"
                   data-project-index="1"
+                  role="listitem"
+                  aria-roledescription="slide"
                   aria-label="Project 2 of 7: MediTrack"
                 >
                   <div class="project-count">02</div>
@@ -753,10 +768,11 @@
                     <h3>MediTrack</h3>
 
                     <p class="project-description">
-                      An academic healthcare management system involving
-                      authentication, patient and doctor management,
-                      appointment scheduling, dashboard functionality,
-                      database integration, and API-based communication.
+                      An academic healthcare management system
+                      involving authentication, patient and doctor
+                      management, appointment scheduling, dashboard
+                      functionality, database integration, and
+                      API-based communication.
                     </p>
 
                     <div
@@ -772,11 +788,12 @@
                   </div>
                 </article>
 
-
                 <!-- Project 03 -->
                 <article
                   class="project-card project-carousel-item"
                   data-project-index="2"
+                  role="listitem"
+                  aria-roledescription="slide"
                   aria-label="Project 3 of 7: Ella's Pizza System"
                 >
                   <div class="project-count">03</div>
@@ -806,11 +823,12 @@
                   </div>
                 </article>
 
-
                 <!-- Project 04 -->
                 <article
                   class="project-card project-carousel-item"
                   data-project-index="3"
+                  role="listitem"
+                  aria-roledescription="slide"
                   aria-label="Project 4 of 7: PHP MVC-Based Web Applications"
                 >
                   <div class="project-count">04</div>
@@ -842,11 +860,12 @@
                   </div>
                 </article>
 
-
                 <!-- Project 05 -->
                 <article
                   class="project-card project-carousel-item"
                   data-project-index="4"
+                  role="listitem"
+                  aria-roledescription="slide"
                   aria-label="Project 5 of 7: Ionic Mobile Application"
                 >
                   <div class="project-count">05</div>
@@ -892,11 +911,12 @@
                   </div>
                 </article>
 
-
                 <!-- Project 06 -->
                 <article
                   class="project-card project-carousel-item"
                   data-project-index="5"
+                  role="listitem"
+                  aria-roledescription="slide"
                   aria-label="Project 6 of 7: Workout Activity Tracker"
                 >
                   <div class="project-count">06</div>
@@ -940,11 +960,12 @@
                   </div>
                 </article>
 
-
                 <!-- Project 07 -->
                 <article
                   class="project-card project-carousel-item"
                   data-project-index="6"
+                  role="listitem"
+                  aria-roledescription="slide"
                   aria-label="Project 7 of 7: Personal Portfolio Website"
                 >
                   <div class="project-count">07</div>
@@ -960,11 +981,11 @@
                     </h3>
 
                     <p class="project-description">
-                      Developed a responsive personal portfolio website
-                      showcasing technical skills, academic projects,
-                      career direction, and professional contact
-                      information. Includes theme switching,
-                      responsive navigation, scroll interactions,
+                      Developed a responsive personal portfolio
+                      website showcasing technical skills, academic
+                      projects, career direction, and professional
+                      contact information. Includes theme switching,
+                      responsive navigation, touch-friendly controls,
                       and accessible interface elements.
                     </p>
 
@@ -989,17 +1010,14 @@
                     </div>
                   </div>
                 </article>
-
               </div>
             </div>
-
 
             <!-- Carousel Navigation -->
             <div
               class="project-carousel-navigation"
               aria-label="Project carousel controls"
             >
-
               <!-- Navigation Dots -->
               <div
                 class="project-carousel-dots"
@@ -1012,6 +1030,7 @@
                   data-slide="0"
                   aria-label="Go to project 1"
                   aria-current="true"
+                  aria-controls="projectCarouselViewport"
                 ></button>
 
                 <button
@@ -1019,6 +1038,7 @@
                   type="button"
                   data-slide="1"
                   aria-label="Go to project 2"
+                  aria-controls="projectCarouselViewport"
                 ></button>
 
                 <button
@@ -1026,6 +1046,7 @@
                   type="button"
                   data-slide="2"
                   aria-label="Go to project 3"
+                  aria-controls="projectCarouselViewport"
                 ></button>
 
                 <button
@@ -1033,6 +1054,7 @@
                   type="button"
                   data-slide="3"
                   aria-label="Go to project 4"
+                  aria-controls="projectCarouselViewport"
                 ></button>
 
                 <button
@@ -1040,6 +1062,7 @@
                   type="button"
                   data-slide="4"
                   aria-label="Go to project 5"
+                  aria-controls="projectCarouselViewport"
                 ></button>
 
                 <button
@@ -1047,6 +1070,7 @@
                   type="button"
                   data-slide="5"
                   aria-label="Go to project 6"
+                  aria-controls="projectCarouselViewport"
                 ></button>
 
                 <button
@@ -1054,17 +1078,21 @@
                   type="button"
                   data-slide="6"
                   aria-label="Go to project 7"
+                  aria-controls="projectCarouselViewport"
                 ></button>
               </div>
 
-
-              <!-- Previous / Next Buttons -->
-              <div class="project-carousel-controls">
+              <!-- Previous / Next Controls -->
+              <div
+                class="project-carousel-controls"
+                aria-label="Previous and next project controls"
+              >
                 <button
                   class="project-carousel-control"
                   id="projectCarouselPrevious"
                   type="button"
                   aria-label="Previous project"
+                  aria-controls="projectCarouselViewport"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -1086,6 +1114,7 @@
                   id="projectCarouselNext"
                   type="button"
                   aria-label="Next project"
+                  aria-controls="projectCarouselViewport"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -1102,16 +1131,12 @@
                   </svg>
                 </button>
               </div>
-
             </div>
           </div>
         </div>
       </section>
 
-      <!-- =================================
-           Education and Journey
-           ================================= -->
-
+      <!-- Education and Journey -->
       <section
         class="section muted"
         id="education"
@@ -1130,7 +1155,6 @@
           </div>
 
           <div class="timeline">
-            <!-- Education -->
             <article>
               <span
                 class="timeline-marker"
@@ -1153,7 +1177,6 @@
               </small>
             </article>
 
-            <!-- DCE -->
             <article>
               <span
                 class="timeline-marker"
@@ -1171,7 +1194,6 @@
               </p>
             </article>
 
-            <!-- Digital Awareness -->
             <article>
               <span
                 class="timeline-marker"
@@ -1192,10 +1214,7 @@
         </div>
       </section>
 
-      <!-- =================================
-           Career Section
-           ================================= -->
-
+      <!-- Career Section -->
       <section
         class="section"
         id="career"
@@ -1260,10 +1279,7 @@
         </div>
       </section>
 
-      <!-- =================================
-           Contact Section
-           ================================= -->
-
+      <!-- Contact Section -->
       <section
         class="section contact-section"
         id="contact"
@@ -1310,8 +1326,6 @@
                 </svg>
               </strong>
             </a>
-
-            
 
             <!-- Location -->
             <div>
