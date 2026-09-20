@@ -92,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const getStoredTheme = () => {
     try {
       const theme = localStorage.getItem(THEME_KEY);
-
       return isValidTheme(theme) ? theme : null;
     } catch {
       return null;
@@ -239,9 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     $$("a", navLinks).forEach((link) => {
-      link.addEventListener("click", () => {
-        closeMenu();
-      });
+      link.addEventListener("click", closeMenu);
     });
   }
 
@@ -254,15 +251,13 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener(
     "resize",
     () => {
-      if (!isMobile()) {
-        closeMenu();
-      }
+      if (!isMobile()) closeMenu();
     },
     { passive: true }
   );
 
   /* =========================================
-     PAGE SCROLL UI
+     SCROLL UI
   ========================================= */
 
   const updateScrollUI = () => {
@@ -316,7 +311,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (scrollTicking) return;
 
     scrollTicking = true;
-
     window.requestAnimationFrame(updateScrollUI);
   };
 
@@ -346,9 +340,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* =========================================
      PROJECT CAROUSEL
-     INFINITE CONTINUOUS MOVEMENT
-     SYNCHRONIZED COUNTER, DOTS, OUTLINE
-     BUTTON, WHEEL, TOUCH AND DRAG SUPPORT
   ========================================= */
 
   const initializeProjectCarousel = () => {
@@ -390,13 +381,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const totalProjects = originalCards.length;
-
     const AUTO_SPEED = 150;
     const RESUME_DELAY = 1000;
     const SNAP_DELAY = 120;
 
     /* -----------------------------------------
        CREATE CLONES
+
+       Clones remain clickable.
+       No aria-hidden, inert, or tabindex=-1.
     ----------------------------------------- */
 
     const fragment =
@@ -406,7 +399,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const clone = card.cloneNode(true);
 
       clone.dataset.carouselClone = "true";
-      clone.setAttribute("aria-hidden", "true");
+      clone.removeAttribute("aria-hidden");
+      clone.removeAttribute("inert");
+
+      clone
+        .querySelectorAll(
+          "a, button, input, select, textarea"
+        )
+        .forEach((control) => {
+          control.removeAttribute("tabindex");
+          control.removeAttribute("aria-hidden");
+          control.removeAttribute("inert");
+        });
 
       fragment.appendChild(clone);
     });
@@ -438,7 +442,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let hasDragged = false;
 
     /* -----------------------------------------
-       CAROUSEL METRICS
+       METRICS
     ----------------------------------------- */
 
     const getGap = () => {
@@ -490,28 +494,20 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       return Math.min(
-        cards.length - 1,
+        totalProjects - 1,
         Math.max(0, rawIndex)
       );
     };
 
-    const getNearestProjectIndex = () => {
-      const cardIndex =
-        getNearestCardIndex();
+    const getNearestProjectIndex = () =>
+      getNearestCardIndex() % totalProjects;
 
-      return cardIndex % totalProjects;
-    };
+    const getCurrentCard = () =>
+      cards[getNearestCardIndex()] || null;
 
     /* -----------------------------------------
-       SINGLE SOURCE OF TRUTH
+       UI
     ----------------------------------------- */
-
-    const getCurrentCard = () => {
-      const cardIndex =
-        getNearestCardIndex();
-
-      return cards[cardIndex] || null;
-    };
 
     const updateCounter = () => {
       if (currentCounter) {
@@ -527,24 +523,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const updateDots = () => {
       dots.forEach((dot, index) => {
-        const isActive =
-          index === activeIndex;
+        const isActive = index === activeIndex;
 
-        dot.classList.toggle(
-          "active",
-          isActive
-        );
-
-        dot.classList.toggle(
-          "is-active",
-          isActive
-        );
+        dot.classList.toggle("active", isActive);
+        dot.classList.toggle("is-active", isActive);
 
         if (isActive) {
-          dot.setAttribute(
-            "aria-current",
-            "true"
-          );
+          dot.setAttribute("aria-current", "true");
         } else {
           dot.removeAttribute("aria-current");
         }
@@ -552,8 +537,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const updateActiveClasses = () => {
-      const currentCard =
-        getCurrentCard();
+      const currentCard = getCurrentCard();
 
       cards.forEach((card) => {
         card.classList.toggle(
@@ -564,45 +548,30 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const updateAccessibility = () => {
-      const currentCard =
-        getCurrentCard();
+      const currentCard = getCurrentCard();
 
       cards.forEach((card) => {
-        const isCurrent =
-          card === currentCard;
+        const isCurrent = card === currentCard;
 
-        const isClone =
-          card.dataset.carouselClone === "true";
-
-        /*
-          The visible clone can receive focus.
-          This prevents the outline and logical
-          project state from becoming desynchronized.
-        */
-
-        card.setAttribute(
-          "aria-hidden",
-          String(!isCurrent)
-        );
+        card.removeAttribute("aria-hidden");
+        card.removeAttribute("inert");
 
         if ("inert" in card) {
-          card.inert = !isCurrent;
+          card.inert = false;
         }
 
-        if (!isCurrent || isClone) {
-          card.setAttribute("tabindex", "-1");
-        } else {
-          card.removeAttribute("tabindex");
-        }
+        card.removeAttribute("tabindex");
+
+        card.classList.toggle(
+          "is-current",
+          isCurrent
+        );
       });
     };
 
     const updateUI = (force = false) => {
       const nextIndex =
         getNearestProjectIndex();
-
-      const currentCard =
-        getCurrentCard();
 
       const currentCardIndex =
         getNearestCardIndex();
@@ -629,7 +598,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     /* -----------------------------------------
-       TRACK RENDERING
+       RENDERING
     ----------------------------------------- */
 
     const renderTrack = () => {
@@ -704,8 +673,13 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const startAnimation = () => {
-      if (prefersReducedMotion()) return;
-      if (isPageHidden || isRunning) return;
+      if (
+        prefersReducedMotion() ||
+        isPageHidden ||
+        isRunning
+      ) {
+        return;
+      }
 
       isRunning = true;
       lastTimestamp = 0;
@@ -725,7 +699,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     /* -----------------------------------------
-       INTERACTION TIMERS
+       TIMERS
     ----------------------------------------- */
 
     const clearResumeTimer = () => {
@@ -766,7 +740,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     /* -----------------------------------------
-       SNAP TO CURRENT PROJECT
+       SNAP
     ----------------------------------------- */
 
     const snapToNearestProject = () => {
@@ -783,7 +757,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     /* -----------------------------------------
-       BUTTON AND DOT NAVIGATION
+       BUTTONS AND DOTS
     ----------------------------------------- */
 
     const moveToProject = (targetIndex) => {
@@ -802,25 +776,19 @@ document.addEventListener("DOMContentLoaded", () => {
       let difference =
         normalizedIndex - currentProject;
 
-      if (
-        difference >
-        totalProjects / 2
-      ) {
+      if (difference > totalProjects / 2) {
         difference -= totalProjects;
       }
 
-      if (
-        difference <
-        -totalProjects / 2
-      ) {
+      if (difference < -totalProjects / 2) {
         difference += totalProjects;
       }
 
-      currentOffset +=
-        difference * stepWidth;
+      currentOffset += difference * stepWidth;
 
       renderAndSync();
       markUserInteraction();
+      scheduleSnap();
     };
 
     previousButton?.addEventListener(
@@ -850,12 +818,50 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* -----------------------------------------
+       INTERACTIVE TARGET DETECTION
+
+       Critical fix for project links.
+    ----------------------------------------- */
+
+    const isInteractiveTarget = (target) => {
+      if (!(target instanceof Element)) {
+        return false;
+      }
+
+      return Boolean(
+        target.closest(
+          [
+            "a",
+            "button",
+            "input",
+            "select",
+            "textarea",
+            "summary",
+            "[role='button']",
+            "[contenteditable='true']"
+          ].join(", ")
+        )
+      );
+    };
+
+    /* -----------------------------------------
        POINTER DRAG / TOUCH SWIPE
+
+       Links are excluded from drag handling.
     ----------------------------------------- */
 
     const handlePointerDown = (event) => {
-      if (event.pointerType === "mouse" &&
-          event.button !== 0) {
+      if (
+        event.pointerType === "mouse" &&
+        event.button !== 0
+      ) {
+        return;
+      }
+
+      if (isInteractiveTarget(event.target)) {
+        pointerId = null;
+        isDragging = false;
+        hasDragged = false;
         return;
       }
 
@@ -869,9 +875,13 @@ document.addEventListener("DOMContentLoaded", () => {
       clearSnapTimer();
       markUserInteraction();
 
-      viewport.setPointerCapture?.(
-        event.pointerId
-      );
+      try {
+        viewport.setPointerCapture(
+          event.pointerId
+        );
+      } catch {
+        // Pointer capture may be unavailable.
+      }
     };
 
     const handlePointerMove = (event) => {
@@ -882,7 +892,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const deltaX =
         event.clientX - pointerStartX;
 
-      if (!isDragging && Math.abs(deltaX) < 6) {
+      if (
+        !isDragging &&
+        Math.abs(deltaX) < 6
+      ) {
         return;
       }
 
@@ -907,9 +920,19 @@ document.addEventListener("DOMContentLoaded", () => {
         snapToNearestProject();
       }
 
-      viewport.releasePointerCapture?.(
-        event.pointerId
-      );
+      try {
+        if (
+          viewport.hasPointerCapture?.(
+            event.pointerId
+          )
+        ) {
+          viewport.releasePointerCapture(
+            event.pointerId
+          );
+        }
+      } catch {
+        // Pointer capture may already be released.
+      }
 
       pointerId = null;
       isDragging = false;
@@ -941,25 +964,45 @@ document.addEventListener("DOMContentLoaded", () => {
     viewport.addEventListener(
       "lostpointercapture",
       () => {
+        if (isDragging) {
+          snapToNearestProject();
+        }
+
         pointerId = null;
         isDragging = false;
+
+        scheduleResume();
       }
     );
+
+    /* -----------------------------------------
+       PREVENT CLICK ONLY AFTER REAL DRAG
+
+       Normal anchor clicks are preserved.
+    ----------------------------------------- */
 
     viewport.addEventListener(
       "click",
       (event) => {
-        if (hasDragged) {
+        if (!hasDragged) return;
+
+        const target = event.target;
+
+        if (
+          target instanceof Element &&
+          target.closest("a")
+        ) {
           event.preventDefault();
           event.stopPropagation();
-          hasDragged = false;
         }
+
+        hasDragged = false;
       },
       true
     );
 
     /* -----------------------------------------
-       WHEEL SCROLL OVERRIDE
+       WHEEL
     ----------------------------------------- */
 
     viewport.addEventListener(
@@ -1083,6 +1126,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "function"
     ) {
       motionQuery.addListener(
+        "change",
         handleCarouselMotionChange
       );
     }
@@ -1102,7 +1146,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeProjectCarousel();
 
   /* =========================================
-     SCROLL REVEAL ANIMATION
+     SCROLL REVEAL
   ========================================= */
 
   const revealSelector = [
@@ -1111,7 +1155,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ".career-grid > div",
     ".career-grid > article",
     ".timeline article",
-    ".contact-box",
+    ".contact-box"
   ].join(", ");
 
   const revealItems = $$(revealSelector);
@@ -1145,16 +1189,13 @@ document.addEventListener("DOMContentLoaded", () => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
 
-          entry.target.classList.add(
-            "is-visible"
-          );
-
+          entry.target.classList.add("is-visible");
           observer.unobserve(entry.target);
         });
       },
       {
         threshold: 0.12,
-        rootMargin: "0px 0px -40px 0px",
+        rootMargin: "0px 0px -40px 0px"
       }
     );
 
@@ -1188,7 +1229,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.scrollTo({
       top: Math.max(0, targetTop),
-      behavior: getScrollBehavior(),
+      behavior: getScrollBehavior()
     });
   };
 
@@ -1249,6 +1290,11 @@ document.addEventListener("DOMContentLoaded", () => {
       "rel",
       [...relValues].join(" ")
     );
+
+    link.setAttribute(
+      "draggable",
+      "false"
+    );
   });
 
   /* =========================================
@@ -1288,10 +1334,7 @@ document.addEventListener("DOMContentLoaded", () => {
         link.getAttribute("href") ===
         `#${sectionId}`;
 
-      link.classList.toggle(
-        "active",
-        isActive
-      );
+      link.classList.toggle("active", isActive);
 
       if (isActive) {
         link.setAttribute(
@@ -1315,8 +1358,7 @@ document.addEventListener("DOMContentLoaded", () => {
         220
       );
 
-    let currentSection =
-      trackedSections[0];
+    let currentSection = trackedSections[0];
 
     trackedSections.forEach((section) => {
       if (
@@ -1371,7 +1413,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "Web Development",
     "Backend Development",
     "Software Development",
-    "Database Integration",
+    "Database Integration"
   ];
 
   let roleIndex = 0;
@@ -1445,8 +1487,7 @@ document.addEventListener("DOMContentLoaded", () => {
     stopTyping();
 
     if (prefersReducedMotion()) {
-      typingText.textContent =
-        typingRoles[0];
+      typingText.textContent = typingRoles[0];
 
       if (typingCursor) {
         typingCursor.hidden = true;
@@ -1483,8 +1524,7 @@ document.addEventListener("DOMContentLoaded", () => {
       showAllRevealItems();
 
       if (typingText) {
-        typingText.textContent =
-          typingRoles[0];
+        typingText.textContent = typingRoles[0];
       }
 
       if (typingCursor) {
