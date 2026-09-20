@@ -586,10 +586,10 @@
         </div>
       </section>
 
-            <!-- =================================
-           Projects Section
-           Premium Auto-Scrolling Horizontal Carousel
-           ================================= -->
+      <!-- =================================
+          Projects Section
+          Premium Auto-Scrolling Horizontal Carousel
+          ================================= -->
 
       <section
         class="section"
@@ -617,11 +617,51 @@
             data-carousel="projects"
             aria-label="Selected projects carousel"
           >
+
+            <!-- Carousel Header -->
+            <div class="project-carousel-header">
+              <div class="project-carousel-heading">
+                <h3>Featured Projects</h3>
+
+                <p>
+                  Selected work and development projects
+                </p>
+              </div>
+
+              <div
+                class="project-carousel-progress"
+                aria-live="polite"
+                aria-atomic="true"
+                aria-label="Current project"
+              >
+                <span
+                  class="project-carousel-progress-current"
+                  id="projectCarouselCurrent"
+                >
+                  01
+                </span>
+
+                <span aria-hidden="true">/</span>
+
+                <span id="projectCarouselTotal">
+                  07
+                </span>
+
+                <span>Projects</span>
+              </div>
+            </div>
+
+
+            <!-- Carousel Viewport -->
             <div class="project-carousel-viewport">
               <div class="project-carousel-track">
 
                 <!-- Project 01 -->
-                <article class="project-card featured project-carousel-item">
+                <article
+                  class="project-card featured project-carousel-item is-active"
+                  data-project-index="0"
+                  aria-label="Project 1 of 7: AgriScan+"
+                >
                   <div class="project-count">01</div>
 
                   <div class="project-main">
@@ -695,8 +735,13 @@
                   </div>
                 </article>
 
+
                 <!-- Project 02 -->
-                <article class="project-card project-carousel-item">
+                <article
+                  class="project-card project-carousel-item"
+                  data-project-index="1"
+                  aria-label="Project 2 of 7: MediTrack"
+                >
                   <div class="project-count">02</div>
 
                   <div class="project-main">
@@ -727,8 +772,13 @@
                   </div>
                 </article>
 
+
                 <!-- Project 03 -->
-                <article class="project-card project-carousel-item">
+                <article
+                  class="project-card project-carousel-item"
+                  data-project-index="2"
+                  aria-label="Project 3 of 7: Ella's Pizza System"
+                >
                   <div class="project-count">03</div>
 
                   <div class="project-main">
@@ -756,8 +806,13 @@
                   </div>
                 </article>
 
+
                 <!-- Project 04 -->
-                <article class="project-card project-carousel-item">
+                <article
+                  class="project-card project-carousel-item"
+                  data-project-index="3"
+                  aria-label="Project 4 of 7: PHP MVC-Based Web Applications"
+                >
                   <div class="project-count">04</div>
 
                   <div class="project-main">
@@ -787,8 +842,13 @@
                   </div>
                 </article>
 
+
                 <!-- Project 05 -->
-                <article class="project-card project-carousel-item">
+                <article
+                  class="project-card project-carousel-item"
+                  data-project-index="4"
+                  aria-label="Project 5 of 7: Ionic Mobile Application"
+                >
                   <div class="project-count">05</div>
 
                   <div class="project-main">
@@ -832,8 +892,13 @@
                   </div>
                 </article>
 
+
                 <!-- Project 06 -->
-                <article class="project-card project-carousel-item">
+                <article
+                  class="project-card project-carousel-item"
+                  data-project-index="5"
+                  aria-label="Project 6 of 7: Workout Activity Tracker"
+                >
                   <div class="project-count">06</div>
 
                   <div class="project-main">
@@ -875,8 +940,13 @@
                   </div>
                 </article>
 
+
                 <!-- Project 07 -->
-                <article class="project-card project-carousel-item">
+                <article
+                  class="project-card project-carousel-item"
+                  data-project-index="6"
+                  aria-label="Project 7 of 7: Personal Portfolio Website"
+                >
                   <div class="project-count">07</div>
 
                   <div class="project-main">
@@ -921,6 +991,118 @@
                 </article>
 
               </div>
+            </div>
+
+
+            <!-- Carousel Navigation -->
+            <div
+              class="project-carousel-navigation"
+              aria-label="Project carousel controls"
+            >
+
+              <!-- Navigation Dots -->
+              <div
+                class="project-carousel-dots"
+                role="group"
+                aria-label="Select project"
+              >
+                <button
+                  class="project-carousel-dot active"
+                  type="button"
+                  data-slide="0"
+                  aria-label="Go to project 1"
+                  aria-current="true"
+                ></button>
+
+                <button
+                  class="project-carousel-dot"
+                  type="button"
+                  data-slide="1"
+                  aria-label="Go to project 2"
+                ></button>
+
+                <button
+                  class="project-carousel-dot"
+                  type="button"
+                  data-slide="2"
+                  aria-label="Go to project 3"
+                ></button>
+
+                <button
+                  class="project-carousel-dot"
+                  type="button"
+                  data-slide="3"
+                  aria-label="Go to project 4"
+                ></button>
+
+                <button
+                  class="project-carousel-dot"
+                  type="button"
+                  data-slide="4"
+                  aria-label="Go to project 5"
+                ></button>
+
+                <button
+                  class="project-carousel-dot"
+                  type="button"
+                  data-slide="5"
+                  aria-label="Go to project 6"
+                ></button>
+
+                <button
+                  class="project-carousel-dot"
+                  type="button"
+                  data-slide="6"
+                  aria-label="Go to project 7"
+                ></button>
+              </div>
+
+
+              <!-- Previous / Next Buttons -->
+              <div class="project-carousel-controls">
+                <button
+                  class="project-carousel-control"
+                  id="projectCarouselPrevious"
+                  type="button"
+                  aria-label="Previous project"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                </button>
+
+                <button
+                  class="project-carousel-control"
+                  id="projectCarouselNext"
+                  type="button"
+                  aria-label="Next project"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </button>
+              </div>
+
             </div>
           </div>
         </div>
