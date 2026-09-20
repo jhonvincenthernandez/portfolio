@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!themeToggle) return;
 
     const isLight = theme === "light";
+
     const label = isLight
       ? "Switch to dark theme"
       : "Switch to light theme";
@@ -239,14 +240,17 @@ document.addEventListener("DOMContentLoaded", () => {
       : "Open navigation menu";
 
     menuToggle.type = "button";
+
     menuToggle.setAttribute(
       "aria-expanded",
       String(isOpen)
     );
+
     menuToggle.setAttribute(
       "aria-label",
       label
     );
+
     menuToggle.setAttribute(
       "title",
       label
@@ -269,11 +273,6 @@ document.addEventListener("DOMContentLoaded", () => {
       shouldOpen
     );
 
-    /*
-      Keep desktop navigation accessible.
-      aria-hidden is only applied while mobile
-      navigation is closed or opened.
-    */
     if (isMobile()) {
       navLinks.setAttribute(
         "aria-hidden",
@@ -443,12 +442,261 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   /* =========================================
+   PREMIUM CONTINUOUS PROJECT CAROUSEL
+  ========================================= */
+
+  const initializeProjectCarousel = () => {
+    const carousel = document.querySelector(
+      '[data-carousel="projects"]'
+    );
+
+    if (!carousel) return;
+
+    const viewport = carousel.querySelector(
+      ".project-carousel-viewport"
+    );
+
+    const track = carousel.querySelector(
+      ".project-carousel-track"
+    );
+
+    const originalCards = [
+      ...carousel.querySelectorAll(
+        ".project-carousel-item"
+      ),
+    ];
+
+    if (
+      !viewport ||
+      !track ||
+      originalCards.length <= 1
+    ) {
+      return;
+    }
+
+    const SCROLL_SPEED = 35;
+
+    let animationFrameId = null;
+    let lastTimestamp = null;
+    let offset = 0;
+    let isPaused = false;
+    let isPageHidden = document.hidden;
+    let resizeTimer = null;
+
+    const originalCount = originalCards.length;
+
+    const clonedCards = originalCards.map((card) => {
+      const clone = card.cloneNode(true);
+
+      clone.setAttribute("aria-hidden", "true");
+
+      clone
+        .querySelectorAll("a, button, input, textarea, select")
+        .forEach((element) => {
+          element.setAttribute("tabindex", "-1");
+        });
+
+      return clone;
+    });
+
+    clonedCards.forEach((clone) => {
+      track.appendChild(clone);
+    });
+
+    const getGap = () => {
+      const styles = window.getComputedStyle(track);
+
+      return (
+        parseFloat(styles.columnGap) ||
+        parseFloat(styles.gap) ||
+        0
+      );
+    };
+
+    const getOriginalTrackWidth = () => {
+      const firstCard = originalCards[0];
+
+      if (!firstCard) return 0;
+
+      const cardWidth =
+        firstCard.getBoundingClientRect().width;
+
+      return (
+        originalCount * cardWidth +
+        (originalCount - 1) * getGap() +
+        getGap()
+      );
+    };
+
+    const applyTransform = () => {
+      track.style.transform =
+        `translate3d(-${offset}px, 0, 0)`;
+    };
+
+    const resetOffsetIfNeeded = () => {
+      const loopWidth = getOriginalTrackWidth();
+
+      if (loopWidth <= 0) return;
+
+      if (offset >= loopWidth) {
+        offset -= loopWidth;
+      }
+    };
+
+    const animate = (timestamp) => {
+      if (lastTimestamp === null) {
+        lastTimestamp = timestamp;
+      }
+
+      const elapsed = Math.min(
+        timestamp - lastTimestamp,
+        50
+      );
+
+      lastTimestamp = timestamp;
+
+      if (
+        !isPaused &&
+        !isPageHidden &&
+        !prefersReducedMotion()
+      ) {
+        offset +=
+          (SCROLL_SPEED * elapsed) / 1000;
+
+        resetOffsetIfNeeded();
+        applyTransform();
+      }
+
+      animationFrameId =
+        window.requestAnimationFrame(animate);
+    };
+
+    const stopAnimation = () => {
+      if (animationFrameId !== null) {
+        window.cancelAnimationFrame(
+          animationFrameId
+        );
+
+        animationFrameId = null;
+      }
+
+      lastTimestamp = null;
+    };
+
+    const startAnimation = () => {
+      stopAnimation();
+
+      if (prefersReducedMotion()) {
+        offset = 0;
+        applyTransform();
+        return;
+      }
+
+      animationFrameId =
+        window.requestAnimationFrame(animate);
+    };
+
+    const pauseCarousel = () => {
+      isPaused = true;
+    };
+
+    const resumeCarousel = () => {
+      isPaused = false;
+      lastTimestamp = null;
+    };
+
+    carousel.addEventListener(
+      "mouseenter",
+      pauseCarousel
+    );
+
+    carousel.addEventListener(
+      "mouseleave",
+      resumeCarousel
+    );
+
+    carousel.addEventListener(
+      "focusin",
+      pauseCarousel
+    );
+
+    carousel.addEventListener(
+      "focusout",
+      (event) => {
+        if (
+          !carousel.contains(
+            event.relatedTarget
+          )
+        ) {
+          resumeCarousel();
+        }
+      }
+    );
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+        isPageHidden = document.hidden;
+
+        if (!isPageHidden) {
+          lastTimestamp = null;
+        }
+      }
+    );
+
+    window.addEventListener(
+      "resize",
+      () => {
+        window.clearTimeout(resizeTimer);
+
+        resizeTimer = window.setTimeout(() => {
+          resetOffsetIfNeeded();
+          applyTransform();
+        }, 150);
+      }
+    );
+
+    const handleMotionChange = () => {
+      if (prefersReducedMotion()) {
+        offset = 0;
+        applyTransform();
+      }
+
+      lastTimestamp = null;
+    };
+
+    if (
+      typeof motionQuery.addEventListener ===
+      "function"
+    ) {
+      motionQuery.addEventListener(
+        "change",
+        handleMotionChange
+      );
+    } else if (
+      typeof motionQuery.addListener ===
+      "function"
+    ) {
+      motionQuery.addListener(
+        handleMotionChange
+      );
+    }
+
+    track.style.transition = "none";
+
+    applyTransform();
+    startAnimation();
+  };
+
+  initializeProjectCarousel();
+
+  /* =========================================
      SCROLL REVEAL ANIMATION
   ========================================= */
 
   const revealSelector = [
     ".skill-card",
-    ".project-card",
+    ".project-card:not(.project-carousel-item)",
     ".career-grid > div",
     ".career-grid > article",
     ".timeline article",

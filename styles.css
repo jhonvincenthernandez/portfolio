@@ -2174,3 +2174,167 @@ html[data-theme="light"] .footer {
 @keyframes typingCursorBlink{0%,45%{opacity:1}46%,100%{opacity:0}}
 @media(max-width:600px){.typing-line{margin-top:18px;font-size:.86rem}}
 @media(prefers-reduced-motion:reduce){.typing-cursor{animation:none;opacity:1}}
+
+
+/* =========================================================
+   PREMIUM AUTO-SCROLLING HORIZONTAL PROJECT CAROUSEL
+   Responsive • Accessible • Theme-Safe • Premium UI
+========================================================= */
+
+/* Carousel wrapper */
+.project-carousel {
+  position: relative;
+  width: 100%;
+  margin-top: 48px;
+}
+
+/* Hide horizontal overflow */
+.project-carousel-viewport {
+  width: 100%;
+  overflow: hidden;
+  padding: 8px 3px 18px;
+  border-radius: var(--radius-lg);
+  touch-action: pan-y;
+}
+
+/* Horizontal track */
+.project-carousel-track {
+  display: flex;
+  align-items: stretch;
+  gap: 22px;
+  width: max-content;
+  will-change: transform;
+  transition: transform 850ms var(--ease);
+}
+
+/* Individual carousel cards */
+.project-carousel-item {
+  flex: 0 0 min(850px, calc(100vw - 80px));
+  width: min(850px, calc(100vw - 80px));
+  min-height: 355px;
+  grid-template-columns: 75px minmax(0, 1fr);
+}
+
+/* Prevent card floating animation from conflicting
+   with carousel movement */
+.project-carousel-item {
+  animation: none !important;
+  transform: none;
+  will-change: auto;
+}
+
+/* Premium hover effect */
+.project-carousel-item:hover {
+  transform: translateY(-5px);
+}
+
+/* Featured project enhancement */
+.project-carousel-item.featured {
+  box-shadow:
+    0 18px 55px #0003,
+    inset 0 1px 0 #ffffff0b;
+}
+
+/* Subtle carousel edge fade */
+.project-carousel::before,
+.project-carousel::after {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 18px;
+  width: 32px;
+  content: "";
+  pointer-events: none;
+}
+
+.project-carousel::before {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    var(--bg),
+    transparent
+  );
+}
+
+.project-carousel::after {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    var(--bg),
+    transparent
+  );
+}
+
+/* Keep content readable */
+.project-carousel-item .project-main {
+  min-width: 0;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .project-carousel-track {
+    gap: 16px;
+  }
+
+  .project-carousel-item {
+    flex-basis: calc(100vw - 64px);
+    width: calc(100vw - 64px);
+  }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+  .project-carousel {
+    margin-top: 32px;
+  }
+
+  .project-carousel-viewport {
+    padding: 5px 0 14px;
+  }
+
+  .project-carousel-track {
+    gap: 14px;
+  }
+
+  .project-carousel-item {
+    flex-basis: calc(100vw - 32px);
+    width: calc(100vw - 32px);
+    min-height: 390px;
+    padding: 25px;
+  }
+
+  .project-carousel::before,
+  .project-carousel::after {
+    display: none;
+  }
+}
+
+/* Light theme */
+html[data-theme="light"] .project-carousel::before {
+  background: linear-gradient(
+    90deg,
+    var(--bg),
+    transparent
+  );
+}
+
+html[data-theme="light"] .project-carousel::after {
+  background: linear-gradient(
+    270deg,
+    var(--bg),
+    transparent
+  );
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .project-carousel-track {
+    transition: none !important;
+  }
+
+  .project-carousel-item {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+

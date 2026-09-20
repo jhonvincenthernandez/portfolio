@@ -65,6 +65,12 @@
       content="https://vincent-portfolio-kappa-seven.vercel.app/assets/profile.jpg"
     />
 
+    <link
+      rel="icon"
+      type="image/png"
+      href="assets/favicon.png"
+    />
+
     <title>
       Vincent. | Portfolio
     </title>
@@ -580,8 +586,9 @@
         </div>
       </section>
 
-      <!-- =================================
+            <!-- =================================
            Projects Section
+           Premium Auto-Scrolling Horizontal Carousel
            ================================= -->
 
       <section
@@ -605,309 +612,317 @@
             </span>
           </div>
 
-          <div class="project-list">
-            <!-- Project 01 -->
-            <article class="project-card featured">
-              <div class="project-count">01</div>
+          <div
+            class="project-carousel"
+            data-carousel="projects"
+            aria-label="Selected projects carousel"
+          >
+            <div class="project-carousel-viewport">
+              <div class="project-carousel-track">
 
-              <div class="project-main">
-                <div class="project-meta">
-                  <span>CAPSTONE PROJECT</span>
-                  <span>AI-integrated system</span>
-                </div>
+                <!-- Project 01 -->
+                <article class="project-card featured project-carousel-item">
+                  <div class="project-count">01</div>
 
-                <h3>
-                  AgriScan<span>+</span>
-                </h3>
+                  <div class="project-main">
+                    <div class="project-meta">
+                      <span>CAPSTONE PROJECT</span>
+                      <span>AI-integrated system</span>
+                    </div>
 
-                <p class="project-description">
-                  An agricultural system involving rice disease
-                  detection, yield prediction, field and planting
-                  monitoring, treatment-related information,
-                  and workflow management. It incorporates AI/ML
-                  concepts for image classification and prediction
-                  within a Django-based web system.
-                </p>
+                    <h3>
+                      AgriScan<span>+</span>
+                    </h3>
 
-                <div
-                  class="tags"
-                  aria-label="AgriScan+ technologies"
-                >
-                  <span>Python</span>
-                  <span>Django</span>
-                  <span>MySQL</span>
-                  <span>JavaScript</span>
-                  <span>Tailwind CSS</span>
-                  <span>AI/ML</span>
-                </div>
+                    <p class="project-description">
+                      An agricultural system involving rice disease
+                      detection, yield prediction, field and planting
+                      monitoring, treatment-related information,
+                      and workflow management. It incorporates AI/ML
+                      concepts for image classification and prediction
+                      within a Django-based web system.
+                    </p>
 
-                <div class="project-bottom">
-                  <span>
-                    Focus: Agriculture + software + ML
-                  </span>
-
-                  <div class="project-bottom-actions">
-                    <span class="status">
-                      Capstone
-                    </span>
-
-                    <a
-                      class="project-link"
-                      href="https://agriscanplus.tech"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Visit AgriScan+ live website in a new tab"
+                    <div
+                      class="tags"
+                      aria-label="AgriScan+ technologies"
                     >
-                      View Live Project
+                      <span>Python</span>
+                      <span>Django</span>
+                      <span>MySQL</span>
+                      <span>JavaScript</span>
+                      <span>Tailwind CSS</span>
+                      <span>AI/ML</span>
+                    </div>
 
-                      <svg
-                        class="icon icon-arrow"
-                        viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        aria-hidden="true"
-                      >
-                        <path d="M7 17 17 7" />
-                        <path d="M7 7h10v10" />
-                      </svg>
-                    </a>
+                    <div class="project-bottom">
+                      <span>
+                        Focus: Agriculture + software + ML
+                      </span>
+
+                      <div class="project-bottom-actions">
+                        <span class="status">
+                          Capstone
+                        </span>
+
+                        <a
+                          class="project-link"
+                          href="https://agriscanplus.tech"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Visit AgriScan+ live website in a new tab"
+                        >
+                          View Live Project
+
+                          <svg
+                            class="icon icon-arrow"
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                          >
+                            <path d="M7 17 17 7" />
+                            <path d="M7 7h10v10" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </article>
+
+                <!-- Project 02 -->
+                <article class="project-card project-carousel-item">
+                  <div class="project-count">02</div>
+
+                  <div class="project-main">
+                    <div class="project-meta">
+                      <span>FULL-STACK SYSTEM</span>
+                      <span>Academic project</span>
+                    </div>
+
+                    <h3>MediTrack</h3>
+
+                    <p class="project-description">
+                      An academic healthcare management system involving
+                      authentication, patient and doctor management,
+                      appointment scheduling, dashboard functionality,
+                      database integration, and API-based communication.
+                    </p>
+
+                    <div
+                      class="tags"
+                      aria-label="MediTrack technologies"
+                    >
+                      <span>Vue.js</span>
+                      <span>Node.js</span>
+                      <span>Express.js</span>
+                      <span>MySQL</span>
+                      <span>Bootstrap</span>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Project 03 -->
+                <article class="project-card project-carousel-item">
+                  <div class="project-count">03</div>
+
+                  <div class="project-main">
+                    <div class="project-meta">
+                      <span>DATABASE WEB APP</span>
+                      <span>Academic project</span>
+                    </div>
+
+                    <h3>Ella's Pizza System</h3>
+
+                    <p class="project-description">
+                      A database-driven web application involving
+                      database connectivity and CRUD operations.
+                    </p>
+
+                    <div
+                      class="tags"
+                      aria-label="Ella's Pizza technologies"
+                    >
+                      <span>PHP</span>
+                      <span>MySQL</span>
+                      <span>PDO</span>
+                      <span>Bootstrap</span>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Project 04 -->
+                <article class="project-card project-carousel-item">
+                  <div class="project-count">04</div>
+
+                  <div class="project-main">
+                    <div class="project-meta">
+                      <span>WEB DEVELOPMENT</span>
+                      <span>Academic work</span>
+                    </div>
+
+                    <h3>
+                      PHP MVC-Based Web Applications
+                    </h3>
+
+                    <p class="project-description">
+                      Academic web applications built using MVC
+                      architecture with validation, database
+                      integration, and CRUD functionality.
+                    </p>
+
+                    <div
+                      class="tags"
+                      aria-label="PHP MVC technologies"
+                    >
+                      <span>PHP</span>
+                      <span>LavaLust MVC</span>
+                      <span>MySQL</span>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Project 05 -->
+                <article class="project-card project-carousel-item">
+                  <div class="project-count">05</div>
+
+                  <div class="project-main">
+                    <div class="project-meta">
+                      <span>MOBILE APPLICATION</span>
+                      <span>Academic project</span>
+                    </div>
+
+                    <h3>
+                      Ionic Mobile Application
+                    </h3>
+
+                    <p class="project-description">
+                      Developed a mobile-oriented application using
+                      Ionic and Vue.js. Worked with Capacitor,
+                      npm-based development workflows, and GitHub
+                      Actions for Android application build and
+                      packaging concepts.
+                    </p>
+
+                    <div
+                      class="tags"
+                      aria-label="Ionic project technologies"
+                    >
+                      <span>Ionic</span>
+                      <span>Vue.js</span>
+                      <span>Capacitor</span>
+                      <span>Android</span>
+                      <span>GitHub Actions</span>
+                    </div>
+
+                    <div class="project-bottom">
+                      <span>
+                        Focus: Mobile development + build workflow
+                      </span>
+
+                      <span class="status">
+                        Academic Project
+                      </span>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Project 06 -->
+                <article class="project-card project-carousel-item">
+                  <div class="project-count">06</div>
+
+                  <div class="project-main">
+                    <div class="project-meta">
+                      <span>DATABASE APPLICATION</span>
+                      <span>Academic project</span>
+                    </div>
+
+                    <h3>
+                      Workout Activity Tracker
+                    </h3>
+
+                    <p class="project-description">
+                      Developed a mobile-oriented activity tracking
+                      application involving Firebase integration and
+                      CRUD functionality for creating, viewing,
+                      updating, and deleting activity records.
+                    </p>
+
+                    <div
+                      class="tags"
+                      aria-label="Workout Tracker technologies"
+                    >
+                      <span>Ionic</span>
+                      <span>Vue.js</span>
+                      <span>Firebase</span>
+                      <span>CRUD</span>
+                    </div>
+
+                    <div class="project-bottom">
+                      <span>
+                        Focus: Mobile UI + database operations
+                      </span>
+
+                      <span class="status">
+                        Academic Project
+                      </span>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Project 07 -->
+                <article class="project-card project-carousel-item">
+                  <div class="project-count">07</div>
+
+                  <div class="project-main">
+                    <div class="project-meta">
+                      <span>PERSONAL WEBSITE</span>
+                      <span>Responsive development</span>
+                    </div>
+
+                    <h3>
+                      Personal Portfolio Website
+                    </h3>
+
+                    <p class="project-description">
+                      Developed a responsive personal portfolio website
+                      showcasing technical skills, academic projects,
+                      career direction, and professional contact
+                      information. Includes theme switching,
+                      responsive navigation, scroll interactions,
+                      and accessible interface elements.
+                    </p>
+
+                    <div
+                      class="tags"
+                      aria-label="Portfolio technologies"
+                    >
+                      <span>HTML</span>
+                      <span>CSS</span>
+                      <span>JavaScript</span>
+                      <span>Responsive Design</span>
+                    </div>
+
+                    <div class="project-bottom">
+                      <span>
+                        Focus: UI + responsive web development
+                      </span>
+
+                      <span class="status">
+                        Personal Project
+                      </span>
+                    </div>
+                  </div>
+                </article>
+
               </div>
-            </article>
-
-            <!-- Project 02 -->
-            <article class="project-card">
-              <div class="project-count">02</div>
-
-              <div class="project-main">
-                <div class="project-meta">
-                  <span>FULL-STACK SYSTEM</span>
-                  <span>Academic project</span>
-                </div>
-
-                <h3>MediTrack</h3>
-
-                <p class="project-description">
-                  An academic healthcare management system involving
-                  authentication, patient and doctor management,
-                  appointment scheduling, dashboard functionality,
-                  database integration, and API-based communication.
-                </p>
-
-                <div
-                  class="tags"
-                  aria-label="MediTrack technologies"
-                >
-                  <span>Vue.js</span>
-                  <span>Node.js</span>
-                  <span>Express.js</span>
-                  <span>MySQL</span>
-                  <span>Bootstrap</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Project 03 -->
-            <article class="project-card">
-              <div class="project-count">03</div>
-
-              <div class="project-main">
-                <div class="project-meta">
-                  <span>DATABASE WEB APP</span>
-                  <span>Academic project</span>
-                </div>
-
-                <h3>Ella's Pizza System</h3>
-
-                <p class="project-description">
-                  A database-driven web application involving
-                  database connectivity and CRUD operations.
-                </p>
-
-                <div
-                  class="tags"
-                  aria-label="Ella's Pizza technologies"
-                >
-                  <span>PHP</span>
-                  <span>MySQL</span>
-                  <span>PDO</span>
-                  <span>Bootstrap</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Project 04 -->
-            <article class="project-card">
-              <div class="project-count">04</div>
-
-              <div class="project-main">
-                <div class="project-meta">
-                  <span>WEB DEVELOPMENT</span>
-                  <span>Academic work</span>
-                </div>
-
-                <h3>
-                  PHP MVC-Based Web Applications
-                </h3>
-
-                <p class="project-description">
-                  Academic web applications built using MVC
-                  architecture with validation, database
-                  integration, and CRUD functionality.
-                </p>
-
-                <div
-                  class="tags"
-                  aria-label="PHP MVC technologies"
-                >
-                  <span>PHP</span>
-                  <span>LavaLust MVC</span>
-                  <span>MySQL</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Project 05 -->
-            <article class="project-card">
-              <div class="project-count">05</div>
-
-              <div class="project-main">
-                <div class="project-meta">
-                  <span>MOBILE APPLICATION</span>
-                  <span>Academic project</span>
-                </div>
-
-                <h3>
-                  Ionic Mobile Application
-                </h3>
-
-                <p class="project-description">
-                  Developed a mobile-oriented application using
-                  Ionic and Vue.js. Worked with Capacitor,
-                  npm-based development workflows, and GitHub
-                  Actions for Android application build and
-                  packaging concepts.
-                </p>
-
-                <div
-                  class="tags"
-                  aria-label="Ionic project technologies"
-                >
-                  <span>Ionic</span>
-                  <span>Vue.js</span>
-                  <span>Capacitor</span>
-                  <span>Android</span>
-                  <span>GitHub Actions</span>
-                </div>
-
-                <div class="project-bottom">
-                  <span>
-                    Focus: Mobile development + build workflow
-                  </span>
-
-                  <span class="status">
-                    Academic Project
-                  </span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Project 06 -->
-            <article class="project-card">
-              <div class="project-count">06</div>
-
-              <div class="project-main">
-                <div class="project-meta">
-                  <span>DATABASE APPLICATION</span>
-                  <span>Academic project</span>
-                </div>
-
-                <h3>
-                  Workout Activity Tracker
-                </h3>
-
-                <p class="project-description">
-                  Developed a mobile-oriented activity tracking
-                  application involving Firebase integration and
-                  CRUD functionality for creating, viewing,
-                  updating, and deleting activity records.
-                </p>
-
-                <div
-                  class="tags"
-                  aria-label="Workout Tracker technologies"
-                >
-                  <span>Ionic</span>
-                  <span>Vue.js</span>
-                  <span>Firebase</span>
-                  <span>CRUD</span>
-                </div>
-
-                <div class="project-bottom">
-                  <span>
-                    Focus: Mobile UI + database operations
-                  </span>
-
-                  <span class="status">
-                    Academic Project
-                  </span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Project 07 -->
-            <article class="project-card">
-              <div class="project-count">07</div>
-
-              <div class="project-main">
-                <div class="project-meta">
-                  <span>PERSONAL WEBSITE</span>
-                  <span>Responsive development</span>
-                </div>
-
-                <h3>
-                  Personal Portfolio Website
-                </h3>
-
-                <p class="project-description">
-                  Developed a responsive personal portfolio website
-                  showcasing technical skills, academic projects,
-                  career direction, and professional contact
-                  information. Includes theme switching,
-                  responsive navigation, scroll interactions,
-                  and accessible interface elements.
-                </p>
-
-                <div
-                  class="tags"
-                  aria-label="Portfolio technologies"
-                >
-                  <span>HTML</span>
-                  <span>CSS</span>
-                  <span>JavaScript</span>
-                  <span>Responsive Design</span>
-                </div>
-
-                <div class="project-bottom">
-                  <span>
-                    Focus: UI + responsive web development
-                  </span>
-
-                  <span class="status">
-                    Personal Project
-                  </span>
-                </div>
-              </div>
-            </article>
+            </div>
           </div>
-
-          
         </div>
       </section>
 
